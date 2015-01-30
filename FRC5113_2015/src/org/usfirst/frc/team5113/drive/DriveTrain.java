@@ -38,15 +38,15 @@ public class DriveTrain
     Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
     Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
     
-	TempDriverJoysticks driverJoystick;
+	/*TempDriverJoysticks driverJoystick;
 	Joystick stick2;
-	Joystick stick1;
+	Joystick stick1;*/
 	
 	public void init()
 	{
-		 driverJoystick = new TempDriverJoysticks(1,2);//calling TempDriverJoysticks, will get a better name for the final class
+		 /*driverJoystick = new TempDriverJoysticks(1,2);//calling TempDriverJoysticks, will get a better name for the final class
 		 stick1 = driverJoystick.getLeftJoystick();
-		 stick2 = driverJoystick.getRightJoystick();
+		 stick2 = driverJoystick.getRightJoystick();*/
 		 
 		 fl = new Victor(frontLeft);//Assigns the digital motor controllers to their real-life counterparts
 		 fr = new Victor(frontRight);
@@ -55,7 +55,7 @@ public class DriveTrain
 	
 	}
 	
-	public void driveUpdate()
+	/*public void driveUpdate()
 	{
 		//joystickDrive(stick1,stick2);//tells the robot which joysticks to look at for driving instructions
 		//joystickDrive2(stick1);
@@ -63,10 +63,10 @@ public class DriveTrain
 		//xboxDrive(stick1);
 		//customMecanumDrive(stick1.getMagnitude(), stick1.getDirectionDegrees(),(float) (stick2.getTwist() / 2f));
 		customMecanumDrive(stick1.getMagnitude(), stick1.getDirectionDegrees(),(float) (stick1.getRawAxis(4) / 2f));
-	}
+	}*/
 	
 	//We made our own drive code! we feel proud
-	private void customMecanumDrive(double d, double e, float rotation)
+	public void customMecanumDrive(double d, double e, float rotation)
 	{
 		d = Math.abs(d);
 		
@@ -90,29 +90,6 @@ public class DriveTrain
 		fr.set(frontRightPower);
 	}
 	
-	private void customMecanumDrive2(double d, double e, float rotation)
-	{
-		d = Math.abs(d);
-		
-		if(d >= 1)
-			d = (float)0.99;
-		
-		float newDirection = (float) (e + 45);//MATH!
-		newDirection = (float)(newDirection * Math.PI) / 180f;
-		float cosine, sine;
-		cosine = (float)Math.cos(newDirection);
-		sine = (float)Math.sin(newDirection);
-		
-		float frontLeftPower = (float) -(sine*d + rotation);//MORE MATH!
-		float frontRightPower = (float)(cosine*d - rotation);
-		float backLeftPower = (float) -(cosine*d + rotation);
-		float backRightPower = (float)(sine*d - rotation);
-		
-		bl.set(backLeftPower);
-		br.set(backRightPower);
-		fl.set(frontLeftPower);
-		fr.set(frontRightPower);
-	}
 	
 	//This is how we UPDATE all the ENCODER stuff
 	public void encoderUpdate()

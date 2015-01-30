@@ -2,7 +2,10 @@
 package org.usfirst.frc.team5113.robot;
 
 import org.usfirst.frc.team5113.comms.IRISComms;
+import org.usfirst.frc.team5113.drive.DriveController;
 import org.usfirst.frc.team5113.drive.DriveTrain;
+import org.usfirst.frc.team5113.drive.JoystickController;
+import org.usfirst.frc.team5113.elevator.Elevator;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -17,9 +20,9 @@ public class Robot extends IterativeRobot
 {
 	
 	IRISComms comms;
-	public static DriveTrain mecanumWheels;//this gives us access to the Drive class
-
-
+	private DriveTrain mecanumWheels;//this gives us access to the Drive class
+	private DriveController controller;
+	private Elevator el;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -27,6 +30,9 @@ public class Robot extends IterativeRobot
      */
     public void robotInit() 
     {
+    	controller = new JoystickController();
+    	controller.init();
+    	el = new Elevator();
     	comms = new IRISComms();
     	mecanumWheels = new DriveTrain();
     	mecanumWheels.init();
@@ -35,7 +41,8 @@ public class Robot extends IterativeRobot
     /**
      * This function is called periodically during autonomous
      */
-    public void autonomousPeriodic() {
+    public void autonomousPeriodic() 
+    {
 
     }
 
@@ -46,7 +53,7 @@ public class Robot extends IterativeRobot
     {
     	while(isOperatorControl() && isEnabled())
     	{
-            mecanumWheels.driveUpdate(); //makes the robot move.... maybe
+            controller.update(mecanumWheels, el);
     		mecanumWheels.encoderUpdate();
     	}
     }
@@ -54,7 +61,8 @@ public class Robot extends IterativeRobot
     /**
      * This function is called periodically during test mode
      */
-    public void testPeriodic() {
+    public void testPeriodic() 
+    {
     
     }
     
