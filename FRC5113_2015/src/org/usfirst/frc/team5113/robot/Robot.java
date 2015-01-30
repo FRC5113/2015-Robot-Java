@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team5113.robot;
 
+import org.usfirst.frc.team5113.comms.IRISComms;
+import org.usfirst.frc.team5113.drive.DriveTrain;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -14,8 +17,7 @@ public class Robot extends IterativeRobot
 {
 	
 	IRISComms comms;
-	CameraBase cbase;
-	public static Drive mecanumWheels;//this gives us access to the Drive class
+	public static DriveTrain mecanumWheels;//this gives us access to the Drive class
 
 
 	
@@ -26,8 +28,7 @@ public class Robot extends IterativeRobot
     public void robotInit() 
     {
     	comms = new IRISComms();
-    	cbase = new CameraBase();
-    	mecanumWheels = new Drive();
+    	mecanumWheels = new DriveTrain();
     	mecanumWheels.init();
     }
 
@@ -46,8 +47,6 @@ public class Robot extends IterativeRobot
     	while(isOperatorControl() && isEnabled())
     	{
             mecanumWheels.driveUpdate(); //makes the robot move.... maybe
-    		cbase.x = (float) comms.stupidTestPleaseIgnore();
-    		cbase.update();
     		mecanumWheels.encoderUpdate();
     	}
     }
