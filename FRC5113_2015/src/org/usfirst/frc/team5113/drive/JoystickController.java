@@ -9,7 +9,6 @@ public class JoystickController extends DriveController
 	Joystick rightStick;
 	Joystick leftStick;
 	
-	
 	public void init()
 	{
 		rightStick = new Joystick(1);
