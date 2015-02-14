@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class Robot extends IterativeRobot
 {
 
-	IRISComms comms;
 	private MotorManager motorManagers;// this gives us access to the Drive class
 	private DriveController controller;
 
@@ -27,9 +26,9 @@ public class Robot extends IterativeRobot
 	 */
 	public void robotInit()
 	{
+		IRISComms.init();
 		controller = new JoystickController();
 		controller.init();
-		comms = new IRISComms();
 		motorManagers = new MotorManager();
 		motorManagers.init();
 	}
@@ -41,12 +40,14 @@ public class Robot extends IterativeRobot
 	{
 
 	}
+	
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic()
 	{
+		motorManagers.init();
 		while (isOperatorControl() && isEnabled())
 		{
 			controller.update(motorManagers);

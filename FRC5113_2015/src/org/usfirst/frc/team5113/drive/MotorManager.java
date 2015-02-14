@@ -59,46 +59,48 @@ public class MotorManager
 	{
 		//Initialize and set to CAN IDs.
 		//We can remap the IDs from within the web browser at roboRIO-5113.local
-		
+		/*
 		fl = new CANTalon (1);
-		fl.changeControlMode(CANTalon.ControlMode.Speed);
-		fl.setSafetyEnabled(true);
-		fl.setExpiration(safetyExpiration);
-		fl.setPID(p, i, d, f, izone, ramprate, profile);
+		fl.changeControlMode(CANTalon.ControlMode.PercentVbus);
+		//fl.setSafetyEnabled(true);
+		//fl.setExpiration(safetyExpiration);
+		//fl.setPID(p, i, d, f, izone, ramprate, profile);
 		fl.set(0);
 		
 		fr = new CANTalon (2);
-		fr.changeControlMode(CANTalon.ControlMode.Speed);
-		fr.setSafetyEnabled(true);
-		fr.setExpiration(safetyExpiration);
-		fr.setPID(p, i, d, f, izone, ramprate, profile);
+		fr.changeControlMode(CANTalon.ControlMode.PercentVbus);
+		//fr.setSafetyEnabled(true);
+		//fr.setExpiration(safetyExpiration);
+		//fr.setPID(p, i, d, f, izone, ramprate, profile);
 		fr.set(0);
 		
 		bl = new CANTalon (3);
-		bl.changeControlMode(CANTalon.ControlMode.Speed);
-		bl.setSafetyEnabled(true);
-		bl.setExpiration(safetyExpiration);
-		bl.setPID(p, i, d, f, izone, ramprate, profile);
+		bl.changeControlMode(CANTalon.ControlMode.PercentVbus);
+		//bl.setSafetyEnabled(true);
+		//bl.setExpiration(safetyExpiration);
+		//bl.setPID(p, i, d, f, izone, ramprate, profile);
 		bl.set(0);
+		*/
+		//br = new CANTalon (4);
+		//br.changeControlMode(CANTalon.ControlMode.PercentVbus);
+		//br.setSafetyEnabled(true);
+		//br.setExpiration(safetyExpiration);
+		//br.setPID(p, i, d, f, izone, ramprate, profile);
+		//br.set(0);
 		
-		br = new CANTalon (4);
-		br.changeControlMode(CANTalon.ControlMode.Speed);
-		br.setSafetyEnabled(true);
-		br.setExpiration(safetyExpiration);
-		br.setPID(p, i, d, f, izone, ramprate, profile);
-		br.set(0);
 		
-		elevator = new CANTalon(5);
-		elevator.changeControlMode(CANTalon.ControlMode.Speed);
-		elevator.setSafetyEnabled(true);
-		elevator.setExpiration(safetyExpiration);
-		elevator.setPID(p, i, d, f, izone, ramprate, profile);
+		elevator = new CANTalon(4);
+		elevator.changeControlMode(CANTalon.ControlMode.PercentVbus);
+		//elevator.setSafetyEnabled(true);
+		//elevator.setExpiration(safetyExpiration);
+		//elevator.setPID(p, i, d, f, izone, ramprate, profile);
 		elevator.set(0);
+		
 	}
 	
 	public void elevatorMovement(double speed)
 	{
-		elevator.set(speed);
+		elevator.set(speed / 2f);
 	}
 
 	//Controls the drive train
@@ -119,10 +121,16 @@ public class MotorManager
 		float backLeftPower = (float) -(cosine * magnitude + rotation);
 		float backRightPower = (float) (sine * magnitude - rotation);
 
-		bl.set(backLeftPower);
-		br.set(backRightPower);
-		fl.set(frontLeftPower);
-		fr.set(frontRightPower);
+		//bl.set(backLeftPower / 100f);
+		//br.set(backRightPower / 3f);
+		//fl.set(frontLeftPower / 100f);
+		//fr.set(frontRightPower / 100f);
+		
+		//System.out.println(bl.getOutputVoltage());
+		//System.out.println(br.getOutputVoltage());
+		//System.out.println(fr.getOutputVoltage());
+		//System.out.println(fl.getOutputVoltage());
+		System.out.println(elevator.get());
 	}
 
 	/*

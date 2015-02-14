@@ -13,15 +13,35 @@ public class IRISComms
 
 	private String tableName = "IRISTable";
 	private NetworkTable table;
-
+	
+	private static IRISComms commsInst;
+	
+	public String getYellowToteData()
+	{
+		return table.getString("YToteData");
+	}
+	
 	public IRISComms()
 	{
-		init();
+		table = NetworkTable.getTable(tableName);
+		table.putBoolean("HighCamera", true);
+	}
+	
+	public void SetCamera(boolean high)
+	{
+		table.putBoolean("HighCamera", high);
+	}
+	
+	//True = high camera, false = low camera
+	public boolean GetCamera()
+	{
+		return table.getBoolean("HighCamera");
 	}
 
-	private void init()
+	public static void init()
 	{
-		table = NetworkTable.getTable(tableName);
+		commsInst = new IRISComms();
+			
 		// CameraServer.getInstance().startAutomaticCapture(new
 		// USBCamera("cam0"));
 		// CameraServer.getInstance().startAutomaticCapture(new
@@ -33,12 +53,9 @@ public class IRISComms
 		// USBCamera("cam3"));
 
 	}
-
-	public double stupidTestPleaseIgnore()
+	
+	public static IRISComms GetInstance()
 	{
-		// System.out.println("Gotten Testval : " + table.getNumber("testValue",
-		// 0));
-		return table.getNumber("testValue", 0);
+		return commsInst;
 	}
-
 }
