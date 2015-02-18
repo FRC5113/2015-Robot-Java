@@ -21,6 +21,19 @@ public class IRISComms
 		return table.getString("YToteData");
 	}
 	
+	
+	public float[] getToteDataFromString()
+	{		
+		String strIn = getYellowToteData();
+		float[] box = new float[6];
+		String[] strs = strIn.split(",");
+		for(int i = 0; i < 6; i++)
+		{
+			box[i] = Float.parseFloat(strs[i]);
+		}
+		return box;
+	}
+	
 	public IRISComms()
 	{
 		table = NetworkTable.getTable(tableName);

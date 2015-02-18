@@ -7,10 +7,8 @@ public class NearToteGoal extends ActionGoal
 	
 	public void update()
 	{		
-		String yellowData = IRISComms.GetInstance().getYellowToteData();
 		
 	}
-	
-	public float[] getToteDataFromString();
+
 
 }

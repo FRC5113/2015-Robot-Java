@@ -21,5 +21,36 @@ public class AutonController extends DriveController
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	//public void 
+	
+	public void forward()
+	{
+		
+	}
+	
+	public void left()
+	{
+		
+	}
+	
+	public void right()
+	{
+	
+	}
+	
+	public void back()
+	{
+		
+	}
+	
+	public void rotCCW()
+	{
+		
+	}
+	
+	public void rotCW()
+	{
+		
+	}
 }

@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot
 	 */
 	public void teleopPeriodic()
 	{
-		motorManagers.init();
+		//motorManagers.init();
 		while (isOperatorControl() && isEnabled())
 		{
 			controller.update(motorManagers);
