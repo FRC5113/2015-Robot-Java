@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5113.comms;
 
+import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.vision.USBCamera;
@@ -18,7 +21,7 @@ public class IRISComms
 	
 	public String getYellowToteData()
 	{
-		return table.getString("YToteData");
+		return table.getString("YellowToteData");
 	}
 	
 	
@@ -34,15 +37,49 @@ public class IRISComms
 		return box;
 	}
 	
+	public void update()
+	{
+        NIVision.IMAQdxGrab(session, frame, 1);
+        CameraServer.getInstance().setImage(frame);	
+	}
+	
 	public IRISComms()
 	{
 		table = NetworkTable.getTable(tableName);
 		table.putBoolean("HighCamera", true);
+		
+		
+		
+        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+
+        // the camera name (ex "cam0") can be found through the roborio web interface
+        session = NIVision.IMAQdxOpenCamera("cam0",
+                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        NIVision.IMAQdxConfigureGrab(session);
+        
+        NIVision.IMAQdxStartAcquisition(session);		
 	}
 	
 	public void SetCamera(boolean high)
 	{
 		table.putBoolean("HighCamera", high);
+        NIVision.IMAQdxStopAcquisition(session);
+        
+        if(high)
+        {
+        session = NIVision.IMAQdxOpenCamera("cam0",
+                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        }
+        else
+        {
+            session = NIVision.IMAQdxOpenCamera("cam1",
+                    NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        }
+        
+        NIVision.IMAQdxConfigureGrab(session);
+        
+        NIVision.IMAQdxStartAcquisition(session);		
+        
 	}
 	
 	//True = high camera, false = low camera
@@ -50,21 +87,13 @@ public class IRISComms
 	{
 		return table.getBoolean("HighCamera");
 	}
+	
+    int session;
+    Image frame;
 
 	public static void init()
 	{
 		commsInst = new IRISComms();
-			
-		// CameraServer.getInstance().startAutomaticCapture(new
-		// USBCamera("cam0"));
-		// CameraServer.getInstance().startAutomaticCapture(new
-		// USBCamera("cam1"));
-
-		// camera.setQuality(50);
-		// camera.startAutomaticCapture("cam0");
-		// //CameraServer.getInstance().startAutomaticCapture(new
-		// USBCamera("cam3"));
-
 	}
 	
 	public static IRISComms GetInstance()

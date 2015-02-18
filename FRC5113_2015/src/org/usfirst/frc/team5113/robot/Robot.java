@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot
 		//motorManagers.init();
 		while (isOperatorControl() && isEnabled())
 		{
+			IRISComms.GetInstance().update();
 			controller.update(motorManagers);
 		}
 	}
