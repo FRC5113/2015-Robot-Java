@@ -5,21 +5,21 @@ import org.usfirst.frc.team5113.drive.MotorManager;
 
 public class AutonController extends DriveController
 {
-	
+	OrbitToteGoal orbit;
 	public static ActionGoal goal;
 
 	@Override
 	public void init()
 	{
 		// TODO Auto-generated method stub
-		
+		orbit = new OrbitToteGoal();
 	}
 
 	@Override
 	public void update(MotorManager dr)
 	{
 		// TODO Auto-generated method stub
-		
+		orbit.update(dr);
 	}
 	
 	//public void 

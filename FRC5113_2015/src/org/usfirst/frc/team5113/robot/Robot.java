@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5113.robot;
 
+import org.usfirst.frc.team5113.auton.AutonController;
 import org.usfirst.frc.team5113.comms.IRISComms;
 import org.usfirst.frc.team5113.controllers.DriveController;
 import org.usfirst.frc.team5113.controllers.JoystickController;
@@ -19,6 +20,7 @@ public class Robot extends IterativeRobot
 
 	private MotorManager motorManagers;// this gives us access to the Drive class
 	private DriveController controller;
+	private AutonController autonControll;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -31,6 +33,8 @@ public class Robot extends IterativeRobot
 		controller.init();
 		motorManagers = new MotorManager();
 		motorManagers.init();
+		autonControll = new AutonController();
+		autonControll.init();
 	}
 
 	/**
@@ -38,7 +42,7 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
-
+			
 	}
 	
 

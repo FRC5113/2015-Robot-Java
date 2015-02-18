@@ -5,4 +5,6 @@ public abstract class ActionGoal
 	public abstract void update();
 	
 	public AutonController contr;
+	
+	public boolean flagCompleated;
 }
