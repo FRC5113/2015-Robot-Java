@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
-			
+			autonControll.update(motorManagers);
 	}
 	
 

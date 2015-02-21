@@ -9,8 +9,9 @@ public class OrbitToteGoal extends ActionGoal
 	final float TOL = 15;
 	IRISComms comm = new IRISComms();
 	float[] totData;
+	public boolean flagCompleated;
 	
-	public void update(MotorManager dr)
+	public void update()
 	{
 		totData = comm.getToteDataFromString();//x,y,w,h,d,a
 		distance = totData[4];
@@ -25,13 +26,20 @@ public class OrbitToteGoal extends ActionGoal
 			shortLength = (float)(310 * Math.pow(distance, -1.2));
 		
 		if((currLength - shortLength) > TOL)
-			dr.mecanumDrive(0.8f, 90, 0.2f);
+			flagCompleated = false;//dr.mecanumDrive(0.8f, 90, 0.2f);
+		else
+			flagCompleated = true;
 	
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public boolean compleated()
+	{
+		if(flagCompleated)
+		{
+			flagCompleated = false;
+			return true;
+		}
+		else
+			return false;
 	}
 }

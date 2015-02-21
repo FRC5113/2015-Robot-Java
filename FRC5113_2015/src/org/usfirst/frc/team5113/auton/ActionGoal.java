@@ -7,4 +7,6 @@ public abstract class ActionGoal
 	public AutonController contr;
 	
 	public boolean flagCompleated;
+	
+	public abstract boolean compleated();
 }

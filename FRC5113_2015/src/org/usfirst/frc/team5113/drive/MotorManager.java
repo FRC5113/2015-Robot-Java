@@ -3,6 +3,7 @@ package org.usfirst.frc.team5113.drive;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
  * @author Lemons
@@ -55,10 +56,12 @@ public class MotorManager
 																	// to their
 																	// real life
 																	// counterparts
-	/*Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
-	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
-	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
-	 	*/
+//	Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
+//	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
+//	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
+
+	
+	
 
 	public void init()
 	{
@@ -105,6 +108,13 @@ public class MotorManager
 		limitLow = new DigitalInput(8);
 		stringPot = new AnalogInput(0);
 		
+		
+		
+	}
+	
+	public double elevatorHeight()
+	{
+		return stringPot.getVoltage();
 	}
 	
 	public void elevatorMovement(double speed)
@@ -120,7 +130,7 @@ public class MotorManager
 			speed = 0;
 		}
 		
-		elevator.set(speed / 2f);
+		elevator.set(speed / 3f);
 	}
 
 	//Controls the drive train

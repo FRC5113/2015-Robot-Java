@@ -12,11 +12,13 @@ public class JoystickController extends DriveController
 {
 	Joystick rightStick;
 	Joystick leftStick;
+	Joystick thirdStick;
 
 	public void init()
 	{
 		rightStick = new Joystick(1);
 		leftStick = new Joystick(2);
+		thirdStick = new Joystick(3);
 	}
 
 	public void update(MotorManager dr)
@@ -25,10 +27,10 @@ public class JoystickController extends DriveController
 		double rightAngle = rightStick.getDirectionDegrees();
 		double leftXAxis = -leftStick.getX();
 				
-		dr.mecanumDrive(rightMag, rightAngle, leftXAxis);
+		dr.mecanumDrive(rightMag / 3f, rightAngle, leftXAxis / 3f);
 		
 		//dr.mecanumDrive(0.8f, 90, 0.2f);
 		
-		dr.elevatorMovement(leftStick.getY());
+		dr.elevatorMovement(thirdStick.getY());
 	}
 }
