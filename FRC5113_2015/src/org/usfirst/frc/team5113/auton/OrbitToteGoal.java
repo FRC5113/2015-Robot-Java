@@ -34,12 +34,8 @@ public class OrbitToteGoal extends ActionGoal
 
 	public boolean compleated()
 	{
-		if(flagCompleated)
-		{
-			flagCompleated = false;
-			return true;
-		}
-		else
-			return false;
+		update();
+		
+		return flagCompleated;
 	}
 }

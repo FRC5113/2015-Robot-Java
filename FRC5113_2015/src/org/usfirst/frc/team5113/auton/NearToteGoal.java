@@ -13,8 +13,8 @@ public class NearToteGoal extends ActionGoal
 	{		
 		totData = comm.getToteDataFromString();//x,y,w,h,d,a
 		distance = totData[4];
-		
-		if(distance > 0.2f)//.2m minDistance from tote to pickup, 0.1m optimal, but also max
+							//.2m minDistance from tote to pickup
+		if(distance > 0.15f)//0.1m optimal distance and max distance
 			flagCompleated = false;
 		else
 			flagCompleated = true;
@@ -22,13 +22,9 @@ public class NearToteGoal extends ActionGoal
 	
 	public boolean compleated()
 	{
-		if(flagCompleated)
-		{
-			flagCompleated = false;
-			return true;
-		}
-		else
-			return false;
+		update();
+		
+		return flagCompleated;
 	}
 
 

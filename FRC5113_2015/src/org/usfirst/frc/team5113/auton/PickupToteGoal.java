@@ -3,7 +3,8 @@ package org.usfirst.frc.team5113.auton;
 public class PickupToteGoal extends ActionGoal
 {
 	public double currHeight;
-	public boolean flagCompleated, flagCompleated2;
+	public boolean flagCompleated = false;
+	public boolean flagCompleated2 = false;
 	public boolean lift = false;
 	public double maxHeight = 4;
 	public double minHeight = .5;
@@ -19,16 +20,16 @@ public class PickupToteGoal extends ActionGoal
 		if(lift)
 		{//raise
 			if(currHeight < maxHeight)
-				flagCompleated = false;
+				flagCompleated2 = false;
 			else
-				flagCompleated = true;	
+				flagCompleated2 = true;	
 		}
 		else
 		{//lower
 			if(currHeight > minHeight)
-				flagCompleated2 = false;
+				flagCompleated = false;
 			else
-				flagCompleated2 = true;
+				flagCompleated = true;
 		}
 	}
 	
@@ -44,24 +45,16 @@ public class PickupToteGoal extends ActionGoal
 
 	public boolean compleated()
 	{
-		if(flagCompleated)
-		{
-			flagCompleated = false;
-			return true;
-		}
-		else
-			return false;
+		update();
+		
+		return flagCompleated;
 	}
 	
 	public boolean compleated2()
 	{
-		if(flagCompleated2)
-		{
-			flagCompleated2 = false;
-			return true;
-		}
-		else
-			return false;
+		update();
+		
+		return flagCompleated2;
 	}
 	
 }

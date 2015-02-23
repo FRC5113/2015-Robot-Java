@@ -13,28 +13,28 @@ public class AutonController extends DriveController
 	private float rot;
 	private float elev;
 	private int mode = 1;
-	private float timeStart, timeNow;
-	public OrbitToteGoal orbit;
-	public NearToteGoal nearGoal;
-	public PickupToteGoal pickup;
-	public boolean rotFlag = false;
-	public boolean autonOneFlag = false;
-	public boolean toteAlgorithmFlag = false;
-	public boolean orbitFlag = false;
-	public int count = 0;
-	public boolean rotFlag2 = false;
-	public boolean rotFlag3 = false;
-	public boolean orbitFlag2 = false;
+	
+	
+	public ToteAlgorithm algorithm;
+	public ToteAlgorithm algorithm2;
+	public ToteAlgorithm algorithm3;
+	public IntoZone zone;
+	public Rotation spin;
+	public Rotation spin2;
+	public OrbitBin binSpin;
+	public OrbitBin binSpin2;
 	
 
 	@Override
 	public void init()
 	{
 		mag = dir = rot = elev = 0;
-		timeStart = 0;
-		orbit = new OrbitToteGoal();
-		nearGoal = new NearToteGoal();
-		pickup = new PickupToteGoal();
+		algorithm = new ToteAlgorithm();
+		algorithm2 = new ToteAlgorithm();
+		algorithm3 = new ToteAlgorithm();
+		zone = new IntoZone();
+		spin = new Rotation();
+		binSpin = new OrbitBin();
 	}
 
 	@Override
@@ -47,190 +47,54 @@ public class AutonController extends DriveController
 			autonOne();
 		else if(mode == 2)
 				autonTwo();
+		else if(mode == 3)
+				autonThree();
 		else
-			autonThree();
+			stop();
 	}
 	
 	public void autonOne()
 	{
-		if(count != 0)
-		{
-			timeNow = System.currentTimeMillis();
-			count++;
-		}
+		if(zone.compleated())
+			zone.update();
 		else
-			timeStart = System.currentTimeMillis();
-		
-		if((timeNow - timeStart) < 2000)//TODO - check time or implement encoders
-			forward(.4f);
-		else
-		{
 			stop();
-			autonOneFlag = true;
-			count = 0;
-		}
 	}
 	
 	public void autonTwo()
 	{
-		if(!orbit.compleated())
-			orbit();
-		else if(!nearGoal.compleated())
-				forward(.2f);
-		else if(!pickup.compleated())
-				elevDown(0.2f);
-		else if(!pickup.compleated2())
-		     {
-				pickup.pickUp();
-				elevDown(0.2f);
-		     }
-		else if(rotFlag)
-			 {
-				if(count != 0)
-				{
-					timeNow = System.currentTimeMillis();
-					count++;
-				}
-				else
-					timeStart = System.currentTimeMillis();
-			
-				if((timeNow - timeStart) < 500)//TODO - check time or implement gyro
-					rotCCW(.3f);
-				else
-				{
-					rotFlag = true;
-					stop();
-					count = 0;
-				}
-			 }
-		else if(autonOneFlag)
-				autonOne();
+		if(algorithm.compleated())
+			algorithm.update();
+		else if(spin.compleatedCW())
+			 	spin.updateCW();
+		else if(zone.compleated())
+				zone.update();
 		else
 			stop();
 	}
 	
 	public void autonThree()
 	{
-		if(!toteAlgorithmFlag)
-			toteAlgorithm();
-		else if(orbitFlag)
-		     {
-				if(count != 0)
-				{
-					timeNow = System.currentTimeMillis();
-					count++;
-				}
-				else
-					timeStart = System.currentTimeMillis();
-			
-				if((timeNow - timeStart) < 2000)//TODO - check time or implement encoders
-					orbit();
-				else
-				{
-					count = 0;
-					orbitFlag = true;
-				}
-			 }
-		else if(rotFlag)
-			 {
-				if(count != 0)
-				{
-					timeNow = System.currentTimeMillis();
-					count++;
-				}
-				else
-					timeStart = System.currentTimeMillis();
-		
-				if((timeNow - timeStart) < 500)//TODO - check time or implement gyro
-					rotCCW(.3f);
-				else
-				{
-					rotFlag = true;
-					stop();
-					count = 0;
-				}
-			 }
-		else if(!toteAlgorithmFlag)
-				toteAlgorithm();
-		else if(orbitFlag2)
-	    {
-			if(count != 0)
-			{
-				timeNow = System.currentTimeMillis();
-				count++;
-			}
-			else
-				timeStart = System.currentTimeMillis();
-		
-			if((timeNow - timeStart) < 2000)//TODO - check time or implement encoders
-				orbit();
-			else
-			{
-				count = 0;
-				orbitFlag2 = true;
-			}
-		}
-		else if(rotFlag2)
-		{
-			if(count != 0)
-			{
-				timeNow = System.currentTimeMillis();
-				count++;
-			}
-			else
-				timeStart = System.currentTimeMillis();
-	
-			if((timeNow - timeStart) < 500)//TODO - check time or implement gyro
-				rotCCW(.3f);
-			else
-			{
-				rotFlag2 = true;
-				stop();
-				count = 0;
-			}
-		}
-		else if(!toteAlgorithmFlag)
-				toteAlgorithm();
-		if(rotFlag3)
-		 {
-			if(count != 0)
-			{
-				timeNow = System.currentTimeMillis();
-				count++;
-			}
-			else
-				timeStart = System.currentTimeMillis();
-		
-			if((timeNow - timeStart) < 500)//TODO - check time or implement gyro
-				rotCCW(.3f);
-			else
-			{
-				rotFlag3 = true;
-				stop();
-				count = 0;
-			}
-		 }
-		else if(autonOneFlag)
-				autonOne();
+		if(algorithm.compleated())
+			algorithm.update();
+		else if(binSpin.compleated())
+				binSpin.update();
+		else if(spin.compleated180())
+			 	spin.update180();
+		else if(algorithm2.compleated())
+				algorithm2.update();
+		else if(binSpin2.compleated())
+				binSpin2.update();
+		else if(spin2.compleated180())
+				spin2.update180();
+		else if(algorithm3.compleated())
+				algorithm3.update();
+		else if(spin.compleated())
+				spin.update();
+		else if(zone.compleated())
+				zone.update();
 		else
 			stop();
-	}
-	
-	public void toteAlgorithm()
-	{
-		if(!orbit.compleated())
-			orbit();
-		else if(!nearGoal.compleated())
-				forward(.2f);
-		else if(!pickup.compleated())
-				elevDown(0.2f);
-		else if(!pickup.compleated2())
-		     {
-				pickup.pickUp();
-				elevDown(0.2f);
-		     }
-		else
-			toteAlgorithmFlag = true;
 	}
 	
 	public void mecan(float mag, float dir, float rot)
@@ -294,7 +158,7 @@ public class AutonController extends DriveController
 	
 	public void stop()
 	{
-		mag = dir = rot = 0;
+		mag = dir = rot = elev = 0;
 	}
 	
 	public void orbit()
