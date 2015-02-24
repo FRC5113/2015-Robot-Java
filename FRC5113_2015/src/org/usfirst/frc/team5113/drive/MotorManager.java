@@ -3,6 +3,7 @@ package org.usfirst.frc.team5113.drive;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
@@ -47,18 +48,12 @@ public class MotorManager
 	int encoderBR2 = 5;
 	int encoderFR1 = 6;
 	int encoderFR2 = 7;
-
-	
-	//Encoder frontRightEncoder = new Encoder(encoderFR1, encoderFR2);// Assigns
-																	// the
-																	// digital
-																	// encoders
-																	// to their
-																	// real life
-																	// counterparts
-//	Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
-//	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
-//	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
+			
+	// Assigns the digital encoder to their real life counterparts
+	Encoder frontRightEncoder = new Encoder(encoderFR1, encoderFR2);
+  	Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
+  	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
+  	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
 
 	
 	
@@ -108,8 +103,7 @@ public class MotorManager
 		limitLow = new DigitalInput(8);
 		stringPot = new AnalogInput(0);
 		
-		
-		
+		startEncoder();
 	}
 	
 	public double elevatorHeight()
@@ -176,21 +170,39 @@ public class MotorManager
 		System.out.println(elevator.get());*/
 	}
 
-	/*
-	// This is how we UPDATE all the ENCODER stuff
-	public void encoderUpdate()
+	
+	public void startEncoder()
 	{
-		boolean fRStop = frontRightEncoder.getStopped();// This gets whether or
-														// not the wheels are in
-		boolean fLStop = frontLeftEncoder.getStopped();// motion exciting, no?
-		boolean bRStop = backRightEncoder.getStopped();
-		boolean bLStop = backLeftEncoder.getStopped();
-
-		System.err.println("Is the Front Left Wheel Stopped: " + fLStop);
-		System.err.println("Is the Front Right Wheel Stopped: " + fRStop);
-		System.err.println("Is the Back Left Wheel Stopped: " + bLStop);
-		System.err.println("Is the Back Right Wheel Stopped: " + bRStop);
+		frontRightEncoder.setDistancePerPulse(0.05);//This is the Gear ratio **** WE MUST FIND THIS*****
+		frontLeftEncoder.setDistancePerPulse(0.05);//Also, We have to find the units of this method
+		backRightEncoder.setDistancePerPulse(0.05);
+		backLeftEncoder.setDistancePerPulse(0.05);
+		
+		frontRightEncoder.startLiveWindowMode();
+		frontLeftEncoder.startLiveWindowMode();
+		backRightEncoder.startLiveWindowMode();
+		backLeftEncoder.startLiveWindowMode();
 	}
-	*/
+	
+	public double getDistance()
+	{
+		double distance = frontRightEncoder.getDistance();//don't know what unit - assume meters for now
+		double distance2 = frontLeftEncoder.getDistance();
+		double distance3 = backRightEncoder.getDistance();
+		double distance4 = backLeftEncoder.getDistance();
+		
+		double avgDistance = (distance + distance2 + distance3 + distance4) / 4;
+		
+		return avgDistance;
+	}
+	
+	public void resetEncoder()
+	{
+		frontRightEncoder.reset();
+		frontLeftEncoder.reset();
+		backRightEncoder.reset();
+		backLeftEncoder.reset();
+	}
+	
 
 }

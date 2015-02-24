@@ -26,6 +26,7 @@ public class JoystickController extends DriveController
 		double rightMag = rightStick.getMagnitude();
 		double rightAngle = rightStick.getDirectionDegrees();
 		double leftXAxis = -leftStick.getX();
+		
 				
 		dr.mecanumDrive(rightMag / 3f, rightAngle, leftXAxis / 3f);
 		

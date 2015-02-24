@@ -21,7 +21,7 @@ public class Rotation extends ActionGoal
 		else
 			timeNow = System.currentTimeMillis();
 		
-		if((timeNow - timeStart) < 500)//TODO - check time or implement encoders
+		if((timeNow - timeStart) < 500)//TODO - check time or implement gyro
 			contr.rotCCW(0.2f);
 		else
 		{
@@ -37,7 +37,7 @@ public class Rotation extends ActionGoal
 		else
 			timeNow2 = System.currentTimeMillis();
 		
-		if((timeNow2 - timeStart2) < 500)//TODO - check time or implement encoders
+		if((timeNow2 - timeStart2) < 500)//TODO - check time or implement gyro
 			contr.rotCCW(0.2f);
 		else
 		{
@@ -53,7 +53,7 @@ public class Rotation extends ActionGoal
 		else
 			timeNow3 = System.currentTimeMillis();
 		
-		if((timeNow3 - timeStart3) < 1000)//TODO - check time or implement encoders
+		if((timeNow3 - timeStart3) < 1000)//TODO - check time or implement gyro
 			contr.rotCCW(0.2f);
 		else
 		{
