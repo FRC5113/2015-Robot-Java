@@ -17,13 +17,13 @@ public class IntoZone extends ActionGoal
 	{
 		distance = motors.getDistance();
 		
-//		if(timeStart == 0)
-//			timeStart = System.currentTimeMillis();
-//		else
-//			timeNow = System.currentTimeMillis();
+		if(timeStart == 0)
+			timeStart = System.currentTimeMillis();
+		else
+			timeNow = System.currentTimeMillis();
 		
-		if(distance < 10)//TODO - Find Distance from Totes to Zone
-			contr.forward(.4f);
+		if((timeStart- timeNow) < 1000)//TODO - Find Distance from Totes to Zone
+			contr.forward(.2f);
 		else
 		{
 			contr.stop();

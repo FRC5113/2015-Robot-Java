@@ -19,6 +19,10 @@ public class IRISComms
 	
 	private static IRISComms commsInst;
 	
+	private int sessionHigh;
+    Image frame;
+	private int sessionLow;
+	
 	public String getYellowToteData()
 	{
 		return table.getString("YellowToteData");
@@ -39,8 +43,14 @@ public class IRISComms
 	
 	public void update()
 	{
-        NIVision.IMAQdxGrab(session, frame, 1);
+        NIVision.IMAQdxGrab(GetCamera() ? sessionHigh : sessionLow, frame, 1);
         CameraServer.getInstance().setImage(frame);	
+        
+        if((int) (System.currentTimeMillis() / 5000) % 2 == 0)
+        {
+        	//SetCamera(!GetCamera());
+        }
+        
 	}
 	
 	public IRISComms()
@@ -53,33 +63,32 @@ public class IRISComms
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
         // the camera name (ex "cam0") can be found through the roborio web interface
-        session = NIVision.IMAQdxOpenCamera("cam0",
-                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        NIVision.IMAQdxConfigureGrab(session);
         
-        NIVision.IMAQdxStartAcquisition(session);		
+        
+        sessionLow = NIVision.IMAQdxOpenCamera("cam0",
+                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        
+        NIVision.IMAQdxConfigureGrab(sessionLow);
+
+        
+        NIVision.IMAQdxStartAcquisition(sessionLow);
+        
 	}
 	
 	public void SetCamera(boolean high)
 	{
-		table.putBoolean("HighCamera", high);
-        NIVision.IMAQdxStopAcquisition(session);
-        
-        if(high)
-        {
-        session = NIVision.IMAQdxOpenCamera("cam0",
+		table.putBoolean("HighCamera", high);    
+		
+		NIVision.IMAQdxStopAcquisition(sessionLow);
+		
+        sessionLow = NIVision.IMAQdxOpenCamera(high ? "cam0" : "cam1",
                 NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        }
-        else
-        {
-            session = NIVision.IMAQdxOpenCamera("cam1",
-                    NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        }
         
-        NIVision.IMAQdxConfigureGrab(session);
+        NIVision.IMAQdxConfigureGrab(sessionLow);
+
         
-        NIVision.IMAQdxStartAcquisition(session);		
-        
+        NIVision.IMAQdxStartAcquisition(sessionLow);
+
 	}
 	
 	//True = high camera, false = low camera
@@ -88,9 +97,6 @@ public class IRISComms
 		return table.getBoolean("HighCamera");
 	}
 	
-    int session;
-    Image frame;
-
 	public static void init()
 	{
 		commsInst = new IRISComms();

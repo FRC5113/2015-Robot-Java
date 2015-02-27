@@ -21,6 +21,9 @@ public class MotorManager
 	//Elevator CAN
 	private CANTalon elevator;
 	
+	private int elevatorGoalHeight = 1500;
+	private long lastTick = System.currentTimeMillis();
+	
 	//Elevator sensors
 	DigitalInput limitHigh;
 	DigitalInput limitLow;
@@ -50,12 +53,12 @@ public class MotorManager
 	int encoderFR2 = 7;
 			
 	// Assigns the digital encoder to their real life counterparts
-	Encoder frontRightEncoder = new Encoder(encoderFR1, encoderFR2);
-  	Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
-  	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
-  	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
+//	Encoder frontRightEncoder = new Encoder(encoderFR1, encoderFR2);
+//  	Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
+//  	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
+//  	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
+//
 
-	
 	
 
 	public void init()
@@ -103,28 +106,61 @@ public class MotorManager
 		limitLow = new DigitalInput(8);
 		stringPot = new AnalogInput(0);
 		
-		startEncoder();
+		elevatorGoalHeight = 1500;
+		
+		//startEncoder();
 	}
 	
 	public double elevatorHeight()
 	{
-		return stringPot.getVoltage();
+		return stringPot.getValue();
 	}
 	
 	public void elevatorMovement(double speed)
-	{
-		System.out.println("L: " + limitLow.get() + ", H: " + limitHigh.get() + ", S: " + stringPot.getValue());
-		
-		if(!limitLow.get() && speed > 0)
+	{	
+		if(speed > 0 && !limitLow.get())
 		{
 			speed = 0;
 		}
-		else if(!limitHigh.get() && speed < 0)
+		if(speed < 0 && !limitHigh.get())
 		{
 			speed = 0;
 		}
+		elevator.set(speed);
+	}
+	
+	public void elevatorMovementLimited(int goal)
+	{		
+		System.out.println("L: " + limitLow.get() + ", H: " + limitHigh.get() + ", S: " + stringPot.getValue() + "G: " + elevatorGoalHeight);
+//				
+//		if(!limitLow.get() && speed > 0)
+//		{
+//			elevatorGoalHeight -= speed * (System.currentTimeMillis() - lastTick);
+//		}
+//		else if(!limitHigh.get() && speed < 0)
+//		{
+//			elevatorGoalHeight += speed * (System.currentTimeMillis() - lastTick);
+//		}
 		
-		elevator.set(speed / 3f);
+		elevatorGoalHeight = goal;
+		
+		float speedOut = 0;
+		
+		if(elevatorGoalHeight > (elevatorHeight() + 20))
+		{
+			speedOut = -0.3f;
+		}
+		if(elevatorGoalHeight < (elevatorHeight() - 20))
+		{
+			speedOut = 0.3f;
+		}
+
+		lastTick = System.currentTimeMillis();
+		
+		System.out.println(speedOut);
+		
+		elevator.set(speedOut);
+		
 	}
 
 	//Controls the drive train
@@ -173,35 +209,40 @@ public class MotorManager
 	
 	public void startEncoder()
 	{
-		frontRightEncoder.setDistancePerPulse(0.05);//This is the Gear ratio **** WE MUST FIND THIS*****
-		frontLeftEncoder.setDistancePerPulse(0.05);//Also, We have to find the units of this method
-		backRightEncoder.setDistancePerPulse(0.05);
-		backLeftEncoder.setDistancePerPulse(0.05);
-		
-		frontRightEncoder.startLiveWindowMode();
-		frontLeftEncoder.startLiveWindowMode();
-		backRightEncoder.startLiveWindowMode();
-		backLeftEncoder.startLiveWindowMode();
+//		frontRightEncoder.setDistancePerPulse(0.2);//This is the Gear ratio **** WE MUST FIND THIS*****
+//		frontLeftEncoder.setDistancePerPulse(0.2);//This is in percentage of an inch per pulse
+//		backRightEncoder.setDistancePerPulse(0.2);
+//		backLeftEncoder.setDistancePerPulse(0.2);
+//		
+//		frontRightEncoder.startLiveWindowMode();
+//		frontLeftEncoder.startLiveWindowMode();
+//		backRightEncoder.startLiveWindowMode();
+//		backLeftEncoder.startLiveWindowMode();
 	}
 	
 	public double getDistance()
 	{
-		double distance = frontRightEncoder.getDistance();//don't know what unit - assume meters for now
-		double distance2 = frontLeftEncoder.getDistance();
-		double distance3 = backRightEncoder.getDistance();
-		double distance4 = backLeftEncoder.getDistance();
+//		double distance = frontRightEncoder.getDistance();//don't know what unit - assume meters for now
+//		double distance2 = frontLeftEncoder.getDistance();
+//		double distance3 = backRightEncoder.getDistance();
+//		double distance4 = backLeftEncoder.getDistance();
+//		
+//		double avgDistance = (distance + distance2 + distance3 + distance4) / 4;
+//		System.out.println("Distance is: " + avgDistance);
+//		
+//		return avgDistance;
 		
-		double avgDistance = (distance + distance2 + distance3 + distance4) / 4;
-		
-		return avgDistance;
+		return 0;
 	}
 	
 	public void resetEncoder()
 	{
+		/*
 		frontRightEncoder.reset();
 		frontLeftEncoder.reset();
 		backRightEncoder.reset();
 		backLeftEncoder.reset();
+	*/
 	}
 	
 
