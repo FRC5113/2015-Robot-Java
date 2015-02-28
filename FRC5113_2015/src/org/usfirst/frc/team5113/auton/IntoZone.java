@@ -9,13 +9,11 @@ public class IntoZone extends ActionGoal
 	public boolean flagCompleated = false;
 	public float timeNow = 0;
 	public float timeStart = 0;
-	public double distance = 0;
 	
 	
 	@Override
 	public void update()
 	{
-		distance = motors.getDistance();
 		
 		if(timeStart == 0)
 			timeStart = System.currentTimeMillis();

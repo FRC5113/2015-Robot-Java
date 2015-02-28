@@ -12,6 +12,7 @@ public class AutonController extends DriveController
 	private float dir;
 	private float rot;
 	private float elev;
+	private float elevToPoint;
 	private int mode = 1;
 	
 	
@@ -24,11 +25,13 @@ public class AutonController extends DriveController
 	public OrbitBin binSpin;
 	public OrbitBin binSpin2;
 	
+	public JakeTestAutonGoals goalllllllllll = new JakeTestAutonGoals();
+	
 
 	@Override
 	public void init()
 	{
-		mag = dir = rot = elev = 0;
+		mag = dir = rot = elev = elevToPoint = 0;
 		algorithm = new ToteAlgorithm();
 		algorithm2 = new ToteAlgorithm();
 		algorithm3 = new ToteAlgorithm();
@@ -41,16 +44,28 @@ public class AutonController extends DriveController
 	public void update(MotorManager dr)
 	{
   		dr.mecanumDrive(mag, dir, rot);
-  		dr.elevatorMovement(elev);
+  		if(elev == 0 && elevToPoint != 0)
+  		{
+  			dr.elevatorMovementLimited((int) elevToPoint);
+  			elev = 0;
+  		}
+  		else
+  		{
+  			dr.elevatorMovement(elev);
+  			elevToPoint = 0;
+  		}
   		
-		if(mode == 1)
-			autonOne();
-		else if(mode == 2)
-				autonTwo();
-		else if(mode == 3)
-				autonThree();
-		else
-			stop();
+  		goalllllllllll.update();
+  		
+//  		
+//		if(mode == 1)
+//			autonOne();
+//		else if(mode == 2)
+//				autonTwo();
+//		else if(mode == 3)
+//				autonThree();
+//		else
+//			stop();
 	}
 	
 	public void autonOne()
@@ -146,6 +161,11 @@ public class AutonController extends DriveController
 		rot = -speed;
 	}
 	
+	public void elevToPoint(float point)
+	{
+		elevToPoint = point;
+	}
+	
 	public void elevUp(float speed)
 	{
 		elev = speed;
@@ -158,7 +178,7 @@ public class AutonController extends DriveController
 	
 	public void stop()
 	{
-		mag = dir = rot = elev = 0;
+		mag = dir = rot = elev = elevToPoint = 0;
 	}
 	
 	public void orbit()

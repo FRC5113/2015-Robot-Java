@@ -43,24 +43,7 @@ public class MotorManager
 	
 	final double TOL = 0.05;
 	
-	int encoderFL1 = 0;// Digital IO for encoders
-	int encoderFL2 = 1;
-	int encoderBL1 = 2;
-	int encoderBL2 = 3;
-	int encoderBR1 = 4;
-	int encoderBR2 = 5;
-	int encoderFR1 = 6;
-	int encoderFR2 = 7;
-			
-	// Assigns the digital encoder to their real life counterparts
-//	Encoder frontRightEncoder = new Encoder(encoderFR1, encoderFR2);
-//  	Encoder backRightEncoder = new Encoder(encoderBR1, encoderBR2);
-//  	Encoder backLeftEncoder = new Encoder(encoderBL1, encoderBL2);
-//  	Encoder frontLeftEncoder = new Encoder(encoderFL1, encoderFL2);
-//
-
 	
-
 	public void init()
 	{
 		//Initialize and set to CAN IDs.
@@ -132,15 +115,6 @@ public class MotorManager
 	public void elevatorMovementLimited(int goal)
 	{		
 		System.out.println("L: " + limitLow.get() + ", H: " + limitHigh.get() + ", S: " + stringPot.getValue() + "G: " + elevatorGoalHeight);
-//				
-//		if(!limitLow.get() && speed > 0)
-//		{
-//			elevatorGoalHeight -= speed * (System.currentTimeMillis() - lastTick);
-//		}
-//		else if(!limitHigh.get() && speed < 0)
-//		{
-//			elevatorGoalHeight += speed * (System.currentTimeMillis() - lastTick);
-//		}
 		
 		elevatorGoalHeight = goal;
 		
@@ -165,15 +139,7 @@ public class MotorManager
 
 	//Controls the drive train
 	public void mecanumDrive(double magnitude, double angle, double rotation)
-	{		
-//		
-//		if(Math.abs(magnitude) < TOL)
-//			magnitude = 0;
-//
-//		if(Math.abs(rotation) < TOL)
-//			rotation = 0;
-		
-		
+	{			
 		//Makes sure that magnitude fits into the range [0, 0.99] as expected. Hardware errors can otherwise cause small movement changes.
 		magnitude = Math.min(Math.abs(magnitude), 0.99);
 
@@ -189,60 +155,11 @@ public class MotorManager
 		float backLeftPower = (float) -(cosine * magnitude + rotation);//+
 		float backRightPower = (float) (sine * magnitude - rotation);//-
 
-		//System.err.println("backLeft: " + backLeftPower);
-		//System.err.println("backRight: " + backRightPower);
-		//System.err.println("frontLeft: " + frontLeftPower);
-		//System.err.println("frontRight: " + frontRightPower);
 		
 		bl.set(backLeftPower);
 		br.set(backRightPower);
 		fl.set(frontLeftPower);
 		fr.set(frontRightPower);
-		
-		/*System.out.println(bl.getOutputVoltage());
-		System.out.println(br.getOutputVoltage());
-		System.out.println(fr.getOutputVoltage());
-		System.out.println(fl.getOutputVoltage());
-		System.out.println(elevator.get());*/
-	}
-
-	
-	public void startEncoder()
-	{
-//		frontRightEncoder.setDistancePerPulse(0.2);//This is the Gear ratio **** WE MUST FIND THIS*****
-//		frontLeftEncoder.setDistancePerPulse(0.2);//This is in percentage of an inch per pulse
-//		backRightEncoder.setDistancePerPulse(0.2);
-//		backLeftEncoder.setDistancePerPulse(0.2);
-//		
-//		frontRightEncoder.startLiveWindowMode();
-//		frontLeftEncoder.startLiveWindowMode();
-//		backRightEncoder.startLiveWindowMode();
-//		backLeftEncoder.startLiveWindowMode();
-	}
-	
-	public double getDistance()
-	{
-//		double distance = frontRightEncoder.getDistance();//don't know what unit - assume meters for now
-//		double distance2 = frontLeftEncoder.getDistance();
-//		double distance3 = backRightEncoder.getDistance();
-//		double distance4 = backLeftEncoder.getDistance();
-//		
-//		double avgDistance = (distance + distance2 + distance3 + distance4) / 4;
-//		System.out.println("Distance is: " + avgDistance);
-//		
-//		return avgDistance;
-		
-		return 0;
-	}
-	
-	public void resetEncoder()
-	{
-		/*
-		frontRightEncoder.reset();
-		frontLeftEncoder.reset();
-		backRightEncoder.reset();
-		backLeftEncoder.reset();
-	*/
 	}
 	
 

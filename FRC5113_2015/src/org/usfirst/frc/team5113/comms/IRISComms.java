@@ -43,20 +43,15 @@ public class IRISComms
 	
 	public void update()
 	{
-        NIVision.IMAQdxGrab(GetCamera() ? sessionHigh : sessionLow, frame, 1);
-        CameraServer.getInstance().setImage(frame);	
-        
-        if((int) (System.currentTimeMillis() / 5000) % 2 == 0)
-        {
-        	//SetCamera(!GetCamera());
-        }
-        
+        NIVision.IMAQdxGrab(sessionLow, frame, 1);
+        CameraServer.getInstance().setImage(frame);    
+        //System.out.println("updating iris comms, frame: " + frame.getAddress());
 	}
 	
 	public IRISComms()
 	{
 		table = NetworkTable.getTable(tableName);
-		table.putBoolean("HighCamera", true);
+		table.putBoolean("HighCamera", false);
 		
 		
 		
@@ -77,6 +72,7 @@ public class IRISComms
 	
 	public void SetCamera(boolean high)
 	{
+		/*
 		table.putBoolean("HighCamera", high);    
 		
 		NIVision.IMAQdxStopAcquisition(sessionLow);
@@ -88,6 +84,7 @@ public class IRISComms
 
         
         NIVision.IMAQdxStartAcquisition(sessionLow);
+        */
 
 	}
 	

@@ -36,12 +36,18 @@ public class Robot extends IterativeRobot
 		autonControll = new AutonController();
 		autonControll.init();
 	}
+	
+	public void disabledPeriodic()
+	{
+			IRISComms.GetInstance().update();
+	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic()
 	{
+			IRISComms.GetInstance().update();
 			autonControll.update(motorManagers);
 	}
 	

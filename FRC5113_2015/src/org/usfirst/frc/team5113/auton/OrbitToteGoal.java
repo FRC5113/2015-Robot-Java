@@ -17,8 +17,8 @@ public class OrbitToteGoal extends ActionGoal
 		distance = totData[4];
 		currLength = totData[2];
 		
-		for(int i = 0; i < totData.length; i++)
-			System.out.println(i + ": " + totData[i]);
+		//for(int i = 0; i < totData.length; i++)
+		//	System.out.println(i + ": " + totData[i]);
 		
 		if(distance > 2)
 			shortLength = (float)(300 * Math.pow(distance, -1.09));
