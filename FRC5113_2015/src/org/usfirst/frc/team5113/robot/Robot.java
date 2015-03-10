@@ -30,17 +30,22 @@ public class Robot extends IterativeRobot
 	public void robotInit()
 	{
 		IRISComms.init();
+		IRISComms.GetInstance().run();
 		controller = new JoystickController();
 		controller.init();
 		motorManagers = new MotorManager();
 		motorManagers.init();
-		autonControll = new AutonController();
-		autonControll.init();
 	}
 	
 	public void disabledPeriodic()
 	{
 			//IRISComms.GetInstance().update();
+	}
+	
+	public void autonomousInit()
+	{
+		autonControll = new AutonController();
+		autonControll.init();
 	}
 
 	/**

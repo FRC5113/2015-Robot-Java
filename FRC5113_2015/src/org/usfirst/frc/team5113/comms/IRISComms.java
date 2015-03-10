@@ -11,13 +11,16 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
  * @author Jacob Laurendeau
  * The "Host"- robot side code for creating and receiving data from network tables sent by IRIS' vision recognition systems.
  */
-public class IRISComms
+public class IRISComms implements Runnable
 {
 
 	private String tableName = "IRISTable";
 	private NetworkTable table;
 	
 	private static IRISComms commsInst;
+	
+	private Thread thread;
+
 	
 	private int sessionHigh;
     Image frame;
@@ -68,6 +71,9 @@ public class IRISComms
         
         NIVision.IMAQdxStartAcquisition(sessionLow);
         
+        
+        
+        
 	}
 	
 	public void SetCamera(boolean high)
@@ -97,10 +103,31 @@ public class IRISComms
 	public static void init()
 	{
 		commsInst = new IRISComms();
+		
+		commsInst.thread = new Thread(commsInst);
+		commsInst.thread.start();
 	}
 	
 	public static IRISComms GetInstance()
 	{
 		return commsInst;
+	}
+
+
+	@Override
+	public void run()
+	{
+		while(true)
+		{
+			update();
+			try
+			{
+				Thread.sleep(25);
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
