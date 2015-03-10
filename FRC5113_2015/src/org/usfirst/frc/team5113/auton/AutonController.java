@@ -14,18 +14,20 @@ public class AutonController extends DriveController
 	private float elev;
 	private float elevToPoint;
 	private int mode = 1;
+	private double lastElevatorHeight = 0;
 	
 	
 	public ToteAlgorithm algorithm;
 	public ToteAlgorithm algorithm2;
 	public ToteAlgorithm algorithm3;
-	public IntoZone zone;
 	public Rotation spin;
 	public Rotation spin2;
 	public OrbitBin binSpin;
 	public OrbitBin binSpin2;
 	
 	public JakeTestAutonGoals goalllllllllll = new JakeTestAutonGoals();
+	public ReedAutonTest SlamTote = new ReedAutonTest();
+	public IntoZone zone = new IntoZone();
 	
 
 	@Override
@@ -35,7 +37,6 @@ public class AutonController extends DriveController
 		algorithm = new ToteAlgorithm();
 		algorithm2 = new ToteAlgorithm();
 		algorithm3 = new ToteAlgorithm();
-		zone = new IntoZone();
 		spin = new Rotation();
 		binSpin = new OrbitBin();
 	}
@@ -52,9 +53,14 @@ public class AutonController extends DriveController
   		else
   		{
   			dr.elevatorMovement(elev);
-  			elevToPoint = 0;
+  			elevToPoint = 0; 
   		}
   		
+  		lastElevatorHeight = dr.elevatorHeight();
+  		
+  		//zone.update();
+  		
+  		goalllllllllll.controller = this;
   		goalllllllllll.update();
   		
 //  		
@@ -161,9 +167,30 @@ public class AutonController extends DriveController
 		rot = -speed;
 	}
 	
-	public void elevToPoint(float point)
+	public boolean elevToPoint(float point)
 	{
-		elevToPoint = point;
+		boolean bool = elevatorOnPoint();
+		
+		if(!bool)
+			elevToPoint = point;
+		else
+			elevToPoint = 0;
+		
+		return bool;
+	}
+	
+	private boolean elevatorOnPoint()
+	{
+		float elevatorGoalHeight = elevToPoint;
+		if(elevatorGoalHeight > (lastElevatorHeight + 20))
+		{
+			return false;
+		}
+		else if(elevatorGoalHeight < (lastElevatorHeight - 20))
+		{
+			return false;
+		}
+		return true;
 	}
 	
 	public void elevUp(float speed)

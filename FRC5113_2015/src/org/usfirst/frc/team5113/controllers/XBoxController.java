@@ -23,9 +23,19 @@ public class XBoxController extends DriveController
 
 	public void update(MotorManager dr)
 	{
-		dr.mecanumDrive(xbox.getMagnitude(), xbox.getMagnitude(),
-				(float) (xbox.getRawAxis(4) * rotationalSensitivity));
+		float mag = (float) (xbox.getMagnitude() * 0.6f);
+		if(mag < 0.10f)
+		{
+			mag = 0;
+		}
 		
-		dr.elevatorMovement(xbox.getRawAxis(5) / 2f);
+		
+		dr.mecanumDrive(mag, xbox.getDirectionDegrees(),
+				(float) (-xbox.getRawAxis(4) * rotationalSensitivity));
+		
+		float left = (float) xbox.getRawAxis(2);
+		float right = (float) xbox.getRawAxis(3);		
+		
+		dr.elevatorMovement(left - right);
 	}
 }

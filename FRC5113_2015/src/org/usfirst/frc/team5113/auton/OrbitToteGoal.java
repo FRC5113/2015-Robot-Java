@@ -7,13 +7,12 @@ public class OrbitToteGoal extends ActionGoal
 {
 	float shortLength, distance, currLength;
 	final float TOL = 15;
-	IRISComms comm = new IRISComms();
 	float[] totData;
 	public boolean flagCompleated;
 	
 	public void update()
 	{
-		totData = comm.getToteDataFromString();//x,y,w,h,d,a
+		totData = new float[] {0,0, 0, 0,0};//comm.getToteDataFromString();//x,y,w,h,d,a
 		distance = totData[4];
 		currLength = totData[2];
 		

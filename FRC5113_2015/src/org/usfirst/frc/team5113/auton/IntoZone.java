@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5113.auton;
 
+import org.usfirst.frc.team5113.auton.JakeTestAutonGoals.State;
 import org.usfirst.frc.team5113.drive.MotorManager;
 
 public class IntoZone extends ActionGoal
@@ -7,25 +8,32 @@ public class IntoZone extends ActionGoal
 	public AutonController contr;
 	public MotorManager motors = new MotorManager();
 	public boolean flagCompleated = false;
-	public float timeNow = 0;
-	public float timeStart = 0;
+	public float timer = 0;
+	private boolean pause = false;
 	
 	
 	@Override
 	public void update()
 	{
-		
-		if(timeStart == 0)
-			timeStart = System.currentTimeMillis();
-		else
-			timeNow = System.currentTimeMillis();
-		
-		if((timeStart- timeNow) < 1000)//TODO - Find Distance from Totes to Zone
-			contr.forward(.2f);
+		if(flagCompleated)
+		{
+			if(!pause)
+			{
+				timer = System.currentTimeMillis();
+				pause = true;
+			}
+			else
+			{
+				if(System.currentTimeMillis() - timer > 1700)
+				{
+					pause = false;
+				}
+				controller.forward(0.5f);
+			}
+		}
 		else
 		{
-			contr.stop();
-			flagCompleated = true;
+			controller.stop();
 		}
 	}
 

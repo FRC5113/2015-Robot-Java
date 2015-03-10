@@ -1,13 +1,12 @@
 package org.usfirst.frc.team5113.auton;
 
-import org.usfirst.frc.team5113.comms.IRISComms;
+import org.usfirst.frc.team5113.auton.JakeTestAutonGoals.State;
 
-public class JakeTestAutonGoals extends ActionGoal
+public class ReedAutonTest extends ActionGoal
 {
-	
 	public enum State 
 	{
-		BROKENDONTUSE, ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, OVERSTAIRS, DROPTOTEINTOAUTOZONE
+		DOWNONSTAIRS, PUSHTIME, SHIFTOVER, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, PUTONSTAIRS, DROPTOTEINTOAUTOZONE
 	}
 	
 	public State state = State.DOWNTOGRABTOTE;
@@ -39,33 +38,6 @@ public class JakeTestAutonGoals extends ActionGoal
 		
 		switch(state)
 		{
-		case BROKENDONTUSE:
-			
-			//System.out.println("FORWARD");
-			
-			if(center[0] < centerImage[0] - 5)
-			{
-				controller.left(0.3f);
-			}
-			else if(center[0] > centerImage[0] + 5)
-			{
-				controller.right(0.3f);
-			}
-			else
-			{
-				//if(ytotedat[4] > 0.4f)
-				if(false)
-					{
-					controller.forward(0.3f);
-				}
-				else
-				{
-					state = State.DOWNTOGRABTOTE;
-				}
-			}
-			
-			break;			
-			
 		case DOWNTOGRABTOTE:
 			
 			//System.out.println("TOTE");
@@ -109,16 +81,16 @@ public class JakeTestAutonGoals extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 1150)
+				if(System.currentTimeMillis() - timer > 1000)
 				{
 					pause = false;
-					state = State.OVERSTAIRS;
+					state = State.PUTONSTAIRS;
 				}
 			}
-			controller.rotCW(0.3f);
+			controller.rotCW(0.2f);
 			break;
 			
-		case OVERSTAIRS:
+		case PUTONSTAIRS:
 			
 			if(!pause)
 			{
@@ -127,52 +99,31 @@ public class JakeTestAutonGoals extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 500)
+				if(System.currentTimeMillis() - timer > 1700)
 				{
 					pause = false;
-					state = State.DROPTOTEINTOAUTOZONE;
-					controller.stop();
+					state = State.DOWNONSTAIRS;
 				}
-				else
-				controller.forward(.9f);
+				controller.forward(0.5f);
 			}
 			
-			break;
+			break;	
 			
-		case ROTATEFROMWITHINAUTOZONE:
-			if(!pause)
+		case DOWNONSTAIRS:
+			
+			if(controller.elevToPoint(75) && !pause)
 			{
 				timer = System.currentTimeMillis();
 				pause = true;
 			}
-			else
-			{
-				if(System.currentTimeMillis() - timer > 1350)
-				{
-					pause = false;
-					state = State.MOVEAWAYFROMTOTE;
-				}
-			}
-			controller.rotCCW(0.2f);
-			break;
 			
-		case DROPTOTEINTOAUTOZONE:
-			
-			//System.out.println("TOTE");
-			
-			if(controller.elevToPoint(65) && !pause)
-			{
-				timer = System.currentTimeMillis();
-				pause = true;
-			}			
-			else if(pause && (System.currentTimeMillis() - timer > 250))
+			if(pause && (System.currentTimeMillis() - timer > 500))
 			{
 				pause = false;
-				state = State.ROTATEFROMWITHINAUTOZONE;				
+				state = State.MOVEAWAYFROMTOTE;				
 			}
 			
 			break;
-			
 			
 		case MOVEAWAYFROMTOTE:
 			
@@ -186,14 +137,51 @@ public class JakeTestAutonGoals extends ActionGoal
 				if(System.currentTimeMillis() - timer > 1000)
 				{
 					pause = false;
-					state = State.QUIT;
+					state = State.SHIFTOVER;
 				}
 				controller.back(0.3f);
 			}
 			
 			break;
 
+		case SHIFTOVER:
+			
+			if(!pause)
+			{
+				timer = System.currentTimeMillis();
+				pause = true;
+			}
+			else
+			{
+				if(System.currentTimeMillis() - timer > 500)
+				{
+					pause = false;
+					state = State.PUSHTIME;
+				}
+				controller.left(0.2f);
+			}
+			
+			break;
 		
+		case PUSHTIME:
+			
+			if(!pause)
+			{
+				timer = System.currentTimeMillis();
+				pause = true;
+			}
+			else
+			{
+				if(System.currentTimeMillis() - timer > 1000)
+				{
+					pause = false;
+					state = State.QUIT;
+				}
+				controller.forward(0.9f);
+			}
+			
+			break;
+			
 		case QUIT:
 			controller.stop();
 			break;
@@ -208,5 +196,4 @@ public class JakeTestAutonGoals extends ActionGoal
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

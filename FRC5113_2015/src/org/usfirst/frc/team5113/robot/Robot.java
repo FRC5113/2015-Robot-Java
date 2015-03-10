@@ -4,6 +4,7 @@ import org.usfirst.frc.team5113.auton.AutonController;
 import org.usfirst.frc.team5113.comms.IRISComms;
 import org.usfirst.frc.team5113.controllers.DriveController;
 import org.usfirst.frc.team5113.controllers.JoystickController;
+import org.usfirst.frc.team5113.controllers.XBoxController;
 import org.usfirst.frc.team5113.drive.MotorManager;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -39,7 +40,7 @@ public class Robot extends IterativeRobot
 	
 	public void disabledPeriodic()
 	{
-			IRISComms.GetInstance().update();
+			//IRISComms.GetInstance().update();
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
-			IRISComms.GetInstance().update();
+			//IRISComms.GetInstance().update();
 			autonControll.update(motorManagers);
 	}
 	
@@ -58,11 +59,11 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		//motorManagers.init();
-		while (isOperatorControl() && isEnabled())
-		{
-			IRISComms.GetInstance().update();
+
+			//IRISComms.GetInstance().update();
 			controller.update(motorManagers);
-		}
+			System.err.println("The string pot height is: " + motorManagers.elevatorHeight());//1427 for highest to lift tote above other tote
+		
 	}
 
 	/**

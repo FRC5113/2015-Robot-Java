@@ -12,26 +12,65 @@ public class JoystickController extends DriveController
 {
 	Joystick rightStick;
 	Joystick leftStick;
-	Joystick thirdStick;
+	Joystick xboxController;
 
 	public void init()
 	{
 		rightStick = new Joystick(1);
 		leftStick = new Joystick(2);
-		thirdStick = new Joystick(0);
+		xboxController = new Joystick(0);
 	}
+	
+	boolean toggle = false;
+	boolean lastHeld = false;
 
 	public void update(MotorManager dr)
 	{
-		double rightMag = rightStick.getMagnitude();
 		double rightAngle = rightStick.getDirectionDegrees();
 		double leftXAxis = -leftStick.getX();
 		
-				
-		dr.mecanumDrive(rightMag, rightAngle, leftXAxis / 3f);
+		double rotationalSensitivity = 0.5f;
 		
-		float left = (float) thirdStick.getRawAxis(2);
-		float right = (float) thirdStick.getRawAxis(3);
+		
+		//button is is top-right back button (NOT the trigger)
+		if(xboxController.getRawButton(6) && !lastHeld)
+		{
+			toggle = !toggle;
+			lastHeld = true;
+		}
+		
+		if(!xboxController.getRawButton(6))
+		{
+			lastHeld = false;
+		}
+		
+		if(toggle)
+		{
+			float mag = (float) Math.abs((Math.sin(xboxController.getDirectionRadians()) + xboxController.getMagnitude()) / 2f);
+			if(mag < 0.1f)
+			{
+				mag = 0;
+			}
+			
+			
+			dr.mecanumDrive(
+					mag, xboxController.getDirectionDegrees(),
+					(float) (-xboxController.getRawAxis(4) * rotationalSensitivity));
+		}
+		else
+		{
+
+			float mag = (float) Math.abs((Math.sin(rightStick.getDirectionRadians()) + rightStick.getMagnitude()) / 2f);
+			if(mag < 0.1f)
+			{
+				mag = 0;
+			}
+			
+			dr.mecanumDrive(mag, rightAngle, leftXAxis / 3f);
+		}
+		
+		float left = (float) xboxController.getRawAxis(2);
+		float right = (float) xboxController.getRawAxis(3);
 		
 		
 		dr.elevatorMovement(left - right);

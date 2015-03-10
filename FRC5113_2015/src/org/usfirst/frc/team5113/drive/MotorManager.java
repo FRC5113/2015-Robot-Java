@@ -120,13 +120,31 @@ public class MotorManager
 		
 		float speedOut = 0;
 		
-		if(elevatorGoalHeight > (elevatorHeight() + 20))
+		////
+		if(elevatorGoalHeight > (elevatorHeight() + 250))
+		{
+			speedOut = -0.45f;
+		}
+		else if(elevatorGoalHeight > (elevatorHeight() + 125))
 		{
 			speedOut = -0.3f;
 		}
-		if(elevatorGoalHeight < (elevatorHeight() - 20))
+		else if(elevatorGoalHeight > (elevatorHeight() + 20))
+		{
+			speedOut = -0.15f;
+		}
+		////
+		if(elevatorGoalHeight < (elevatorHeight() - 250))
+		{
+			speedOut = 0.45f;
+		}
+		else if(elevatorGoalHeight < (elevatorHeight() - 125))
 		{
 			speedOut = 0.3f;
+		}
+		else if(elevatorGoalHeight < (elevatorHeight() - 20))
+		{
+			speedOut = 0.15f;
 		}
 
 		lastTick = System.currentTimeMillis();
