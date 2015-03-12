@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5113.controllers;
 
-import org.usfirst.frc.team5113.drive.MotorManager;
+import org.usfirst.frc.team5113.drive.CANManager;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -21,7 +21,7 @@ public class XBoxController extends DriveController
 		xbox = new Joystick(0);
 	}
 
-	public void update(MotorManager dr)
+	public void update(CANManager dr)
 	{
 		float mag = (float) (xbox.getMagnitude() * 0.6f);
 		if(mag < 0.10f)

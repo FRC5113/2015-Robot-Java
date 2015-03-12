@@ -1,12 +1,12 @@
 package org.usfirst.frc.team5113.auton;
 
 import org.usfirst.frc.team5113.auton.JakeTestAutonGoals.State;
-import org.usfirst.frc.team5113.drive.MotorManager;
+import org.usfirst.frc.team5113.drive.CANManager;
 
 public class IntoZone extends ActionGoal
 {
 	public AutonController contr;
-	public MotorManager motors = new MotorManager();
+	public CANManager motors = new CANManager();
 	public boolean flagCompleated = false;
 	public float timer = 0;
 	private boolean pause = false;

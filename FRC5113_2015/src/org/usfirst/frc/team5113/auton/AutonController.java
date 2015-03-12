@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5113.auton;
 
 import org.usfirst.frc.team5113.controllers.DriveController;
-import org.usfirst.frc.team5113.drive.MotorManager;
+import org.usfirst.frc.team5113.drive.CANManager;
 
 public class AutonController extends DriveController
 {
@@ -42,7 +42,7 @@ public class AutonController extends DriveController
 	}
 
 	@Override
-	public void update(MotorManager dr)
+	public void update(CANManager dr)
 	{
   		dr.mecanumDrive(mag, dir, rot);
   		if(elev == 0 && elevToPoint != 0)

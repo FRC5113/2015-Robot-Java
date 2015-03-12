@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5113.controllers;
 
-import org.usfirst.frc.team5113.drive.MotorManager;
+import org.usfirst.frc.team5113.drive.CANManager;
 
 /**
  * 
@@ -14,7 +14,7 @@ public class NetworkController extends DriveController
 
 	}
 
-	public void update(MotorManager dr)
+	public void update(CANManager dr)
 	{
 
 	}

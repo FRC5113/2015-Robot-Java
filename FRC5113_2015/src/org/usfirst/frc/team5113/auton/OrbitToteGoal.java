@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5113.auton;
 
 import org.usfirst.frc.team5113.comms.IRISComms;
-import org.usfirst.frc.team5113.drive.MotorManager;
+import org.usfirst.frc.team5113.drive.CANManager;
 
 public class OrbitToteGoal extends ActionGoal
 {

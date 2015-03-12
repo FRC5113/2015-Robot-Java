@@ -5,7 +5,7 @@ import org.usfirst.frc.team5113.comms.IRISComms;
 import org.usfirst.frc.team5113.controllers.DriveController;
 import org.usfirst.frc.team5113.controllers.JoystickController;
 import org.usfirst.frc.team5113.controllers.XBoxController;
-import org.usfirst.frc.team5113.drive.MotorManager;
+import org.usfirst.frc.team5113.drive.CANManager;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class Robot extends IterativeRobot
 {
 
-	private MotorManager motorManagers;// this gives us access to the Drive class
+	private CANManager motorManagers;// this gives us access to the Drive class
 	private DriveController controller;
 	private AutonController autonControll;
 
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot
 		IRISComms.GetInstance().run();
 		controller = new JoystickController();
 		controller.init();
-		motorManagers = new MotorManager();
+		motorManagers = new CANManager();
 		motorManagers.init();
 	}
 	
