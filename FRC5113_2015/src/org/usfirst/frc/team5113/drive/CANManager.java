@@ -78,6 +78,11 @@ public class CANManager
 		pneumatics.clearAllPCMStickyFaults();
 	}
 	
+	public boolean pneumaticsHasErrors()
+	{
+		return pneumatics.getPCMSolenoidVoltageFault() || pneumatics.getPCMSolenoidVoltageStickyFault();
+	}
+	
 	public void init()
 	{
 		//Initialize and set to CAN IDs.
