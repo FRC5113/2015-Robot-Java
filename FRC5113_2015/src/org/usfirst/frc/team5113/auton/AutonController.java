@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5113.auton;
 
+import org.usfirst.frc.team5113.comms.IRISComms;
 import org.usfirst.frc.team5113.controllers.DriveController;
 import org.usfirst.frc.team5113.drive.CANManager;
 
@@ -14,14 +15,46 @@ public class AutonController extends DriveController
 	private float elev;
 	private float elevToPoint;
 	private double lastElevatorHeight = 0;
-
-	public JakeTestAutonGoals goalllllllllll = new JakeTestAutonGoals();
 	
+	public ActionGoal autonGoal;
+	
+	private String choice = "Nothing";	
 
 	@Override
 	public void init()
 	{
 		mag = dir = rot = elev = elevToPoint = 0;
+		setChoice();
+		
+		switch(choice)
+		{
+		case "Nothing":
+			autonGoal = new GoalNothing();
+			break;
+		case "Tote_Step":
+			autonGoal = new GoalToteStep();
+			break;
+		case "Tote_Clear":
+			autonGoal = new GoalToteClear();
+			break;
+		case "Notote_Step":
+			break;
+		case "Notote_Clear":
+			break;
+		case "Twotote_Step":
+			break;
+		case "Twotote_Clear":
+			break;
+		case "Threetote":
+			break;
+		}
+		
+  		autonGoal.controller = this;		
+	}
+	
+	private void setChoice()
+	{
+		choice = IRISComms.GetInstance().getMiscData("AutonChoice");
 	}
 
 	@Override
@@ -41,10 +74,7 @@ public class AutonController extends DriveController
   		
   		lastElevatorHeight = dr.elevatorHeight();
   		
-  		//zone.update();
-  		
-  		goalllllllllll.controller = this;
-  		goalllllllllll.update();
+  		goal.update();
 	}
 	
 	public void mecan(float mag, float dir, float rot)

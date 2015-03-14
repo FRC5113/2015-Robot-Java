@@ -201,12 +201,4 @@ public class JakeTestAutonGoals extends ActionGoal
 		}
 		
 	}
-
-	@Override
-	public boolean compleated()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

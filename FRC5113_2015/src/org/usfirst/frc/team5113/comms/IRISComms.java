@@ -20,7 +20,6 @@ public class IRISComms implements Runnable
 	private static IRISComms commsInst;
 	
 	private Thread thread;
-
 	
 	private int sessionHigh;
     Image frame;
@@ -29,6 +28,11 @@ public class IRISComms implements Runnable
 	public String getYellowToteData()
 	{
 		return table.getString("YellowToteData");
+	}
+	
+	public String getMiscData(String key)
+	{
+		return table.getString(key);
 	}
 	
 	
