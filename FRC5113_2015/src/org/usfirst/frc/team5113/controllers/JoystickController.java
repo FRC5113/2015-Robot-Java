@@ -62,6 +62,8 @@ public class JoystickController extends DriveController
 
 	private void handleXboxDrive(CANManager dr)
 	{
+		//The magnitude uses sin so that it will drive at about 50% speed forward,
+		//And 100% speed sideways. Because mecanum requires more power sideways.
 		float mag = (float) Math.abs((Math.sin(xboxController
 				.getDirectionRadians()) + xboxController.getMagnitude()) / 2f);
 		if (mag < 0.1f)
@@ -80,6 +82,8 @@ public class JoystickController extends DriveController
 		double leftXAxis = -leftStick.getX();
 
 		// Joystick drive control
+		//The magnitude uses sin so that it will drive at about 50% speed forward,
+		//And 100% speed sideways. Because mecanum requires more power sideways.
 		float mag = (float) Math
 				.abs((Math.sin(rightStick.getDirectionRadians()) + rightStick
 						.getMagnitude()) / 2f);
