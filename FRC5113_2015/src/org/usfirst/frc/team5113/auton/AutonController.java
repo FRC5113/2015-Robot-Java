@@ -13,32 +13,15 @@ public class AutonController extends DriveController
 	private float rot;
 	private float elev;
 	private float elevToPoint;
-	private int mode = 1;
 	private double lastElevatorHeight = 0;
-	
-	
-	public ToteAlgorithm algorithm;
-	public ToteAlgorithm algorithm2;
-	public ToteAlgorithm algorithm3;
-	public Rotation spin;
-	public Rotation spin2;
-	public OrbitBin binSpin;
-	public OrbitBin binSpin2;
-	
+
 	public JakeTestAutonGoals goalllllllllll = new JakeTestAutonGoals();
-	public ReedAutonTest SlamTote = new ReedAutonTest();
-	public IntoZone zone = new IntoZone();
 	
 
 	@Override
 	public void init()
 	{
 		mag = dir = rot = elev = elevToPoint = 0;
-		algorithm = new ToteAlgorithm();
-		algorithm2 = new ToteAlgorithm();
-		algorithm3 = new ToteAlgorithm();
-		spin = new Rotation();
-		binSpin = new OrbitBin();
 	}
 
 	@Override
@@ -62,60 +45,6 @@ public class AutonController extends DriveController
   		
   		goalllllllllll.controller = this;
   		goalllllllllll.update();
-  		
-//  		
-//		if(mode == 1)
-//			autonOne();
-//		else if(mode == 2)
-//				autonTwo();
-//		else if(mode == 3)
-//				autonThree();
-//		else
-//			stop();
-	}
-	
-	public void autonOne()
-	{
-		if(zone.compleated())
-			zone.update();
-		else
-			stop();
-	}
-	
-	public void autonTwo()
-	{
-		if(algorithm.compleated())
-			algorithm.update();
-		else if(spin.compleatedCW())
-			 	spin.updateCW();
-		else if(zone.compleated())
-				zone.update();
-		else
-			stop();
-	}
-	
-	public void autonThree()
-	{
-		if(algorithm.compleated())
-			algorithm.update();
-		else if(binSpin.compleated())
-				binSpin.update();
-		else if(spin.compleated180())
-			 	spin.update180();
-		else if(algorithm2.compleated())
-				algorithm2.update();
-		else if(binSpin2.compleated())
-				binSpin2.update();
-		else if(spin2.compleated180())
-				spin2.update180();
-		else if(algorithm3.compleated())
-				algorithm3.update();
-		else if(spin.compleated())
-				spin.update();
-		else if(zone.compleated())
-				zone.update();
-		else
-			stop();
 	}
 	
 	public void mecan(float mag, float dir, float rot)
