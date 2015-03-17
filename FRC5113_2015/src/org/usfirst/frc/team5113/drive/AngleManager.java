@@ -38,6 +38,23 @@ public class AngleManager
 		gyro.updateTable();
 		accel.updateTable();
 	}
+	
+	//double[] temp = accelVals();
+    //return (.98 * gyroVals()) + (.2 * temp[0]);
+	//pitch = atan2(accYval, accZval)+PI
+	//roll = atan2(accXval, accZval)+PI
+			
+	public double roll()//X vals and Z vals
+	{
+		double[] temp = accelVals();
+		return Math.atan2(temp[1], temp[2]) + Math.PI;
+	}
+	
+	public double pitch()//Y vals and Z vals
+	{
+		double[] temp = accelVals();
+		return Math.atan2(temp[0], temp[2]) + Math.PI;
+	}
 
 	/***
 	 * @return double[] {x, y, z}
@@ -56,10 +73,9 @@ public class AngleManager
 	{
 		return gyro.getAngle();
 	}
-
+	
 	public double currAngle()
 	{
-		double[] temp = accelVals();
-		return (.98 * gyroVals()) + (.2 * temp[0]);
+		return gyroVals();
 	}
 }

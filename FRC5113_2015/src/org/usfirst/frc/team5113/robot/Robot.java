@@ -57,9 +57,7 @@ public class Robot extends IterativeRobot
 	{
 			//IRISComms.GetInstance().update();
 			autonControll.update(motorManagers);
-			
-			if(autonControll.getAngleUpdate())
-				AngleManager.getInstance().update();
+			AngleManager.getInstance().update();
 	}
 	
 

@@ -111,7 +111,8 @@ public class JoystickController extends DriveController
 		if (!xboxController.getRawButton(7))
 		{
 			lastHeld = false;
-		} else
+		} 
+		else
 		{
 			// Signal switch with rumble
 			xboxController.setRumble(toggle ? RumbleType.kLeftRumble

@@ -7,7 +7,7 @@ public class GoalToteStep extends ActionGoal
 {
 	public enum State 
 	{
-		ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, OVERSTAIRS, DROPTOTEINTOAUTOZONE
+		OVERSTAIRS2, ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, OVERSTAIRS, DROPTOTEINTOAUTOZONE
 	}
 	
 	public State state = State.DOWNTOGRABTOTE;
@@ -90,8 +90,6 @@ public class GoalToteStep extends ActionGoal
 			
 		case OVERSTAIRS:
 			
-			controller.noUpdateAngle();
-			
 			if(!pause)
 			{
 				timer = System.currentTimeMillis();
@@ -99,19 +97,30 @@ public class GoalToteStep extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 500)
+				if(System.currentTimeMillis() - timer > 250)
 				{
 					pause = false;
-					state = State.DROPTOTEINTOAUTOZONE;
+					state = State.OVERSTAIRS2;
 					controller.stop();
-					controller.updateAngle();
 				}
 				else
-				controller.forward(.9f);
+					controller.forward(.5f);
 			}
 			
 			break;
+		
+		case OVERSTAIRS2:
 			
+			if(Math.abs(controller.pitch()) < 10)
+			{
+				controller.stop();
+				state = State.ROTATEFROMWITHINAUTOZONE;
+			}
+			else
+				controller.forward(0.9f);
+			
+			break;
+				
 		case ROTATEFROMWITHINAUTOZONE:
 			
 			if(!pause)
@@ -124,7 +133,7 @@ public class GoalToteStep extends ActionGoal
 			{
 				controller.stop();
 				pause = false;
-				state = State.OVERSTAIRS;
+				state = State.DROPTOTEINTOAUTOZONE;
 			}
 			controller.rotCCW(0.3f);
 			break;
@@ -141,7 +150,7 @@ public class GoalToteStep extends ActionGoal
 			else if(pause && (System.currentTimeMillis() - timer > 250))
 			{
 				pause = false;
-				state = State.ROTATEFROMWITHINAUTOZONE;				
+				state = State.MOVEAWAYFROMTOTE;				
 			}
 			
 			break;
@@ -161,7 +170,7 @@ public class GoalToteStep extends ActionGoal
 					pause = false;
 					state = State.QUIT;
 				}
-				controller.back(0.3f);
+				controller.back(0.2f);
 			}
 			
 			break;

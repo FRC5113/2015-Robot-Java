@@ -21,8 +21,6 @@ public class AutonController extends DriveController
 	private float elevToPoint;
 	private double lastElevatorHeight = 0;
 	
-	public boolean updateAngle = true;
-	
 	public ActionGoal autonGoal;
 	
 	private String choice = "Nothing";	
@@ -174,19 +172,14 @@ public class AutonController extends DriveController
 		return angleMesure.currAngle();
 	}
 	
-	public void updateAngle()
+	public double roll()
 	{
-		updateAngle = true;
+		return angleMesure.roll();
 	}
 	
-	public void noUpdateAngle()
+	public double pitch()
 	{
-		updateAngle = false;
-	}
-	
-	public boolean getAngleUpdate()
-	{
-		return updateAngle;
+		return angleMesure.pitch();
 	}
 	
 	public double[] getAllAngleInfo()
