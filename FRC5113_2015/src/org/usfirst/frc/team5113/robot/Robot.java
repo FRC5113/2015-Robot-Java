@@ -70,6 +70,14 @@ public class Robot extends IterativeRobot
 	{
 		//motorManagers.init();
 
+			System.out.println();
+			System.err.println("Angle?: " + autonControll.getAngle());
+			System.err.println("AccelerometerX?: " + autonControll.getAllAngleInfo()[0]);
+			System.err.println("AccelerometerY?: " + autonControll.getAllAngleInfo()[1]);
+			System.err.println("AccelerometerZ?: " + autonControll.getAllAngleInfo()[2]);
+			System.err.println("Gyro?: " + autonControll.getAllAngleInfo()[3]);
+			
+			
 			//IRISComms.GetInstance().update();
 			controller.update(motorManagers);
 			AngleManager.getInstance().update();

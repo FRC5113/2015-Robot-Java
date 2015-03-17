@@ -189,6 +189,19 @@ public class AutonController extends DriveController
 		return updateAngle;
 	}
 	
+	public double[] getAllAngleInfo()
+	{
+		double[] angles = new double[3];
+		double[] accelValues = angleMesure.accelVals();
+		
+		angles[0] = accelValues[0];
+		angles[1] = accelValues[1];
+		angles[2] = accelValues[2];
+		angles[3] = angleMesure.gyroVals();
+		
+		return angles;
+	}
+	
 	public void stop()
 	{
 		mag = dir = rot = elev = elevToPoint = 0;
