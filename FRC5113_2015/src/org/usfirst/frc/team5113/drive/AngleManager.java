@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 public class AngleManager
 {
 	// Accelerometer
-	ADXL345_I2C accel;	//Ari confirmed that we do infact use I2C
+	ADXL345_I2C accel;	//Ari confirmed that we do in fact use I2C
 	ADXL345_I2C.AllAxes accelerations;
 
 	// Gyro
@@ -51,9 +51,15 @@ public class AngleManager
 
 		return vals;
 	}
+	
+	public double gyroVals()
+	{
+		return gyro.getAngle();
+	}
 
 	public double currAngle()
 	{
-		return gyro.getAngle();
+		double[] temp = accelVals();
+		return (.98 * gyroVals()) + (.2 * temp[0]);
 	}
 }
