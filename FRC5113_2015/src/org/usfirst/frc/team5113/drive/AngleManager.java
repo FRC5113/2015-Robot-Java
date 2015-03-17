@@ -48,7 +48,7 @@ public class AngleManager
 		vals[0] = accel.getAcceleration(ADXL345_I2C.Axes.kX);
 		vals[1] = accel.getAcceleration(ADXL345_I2C.Axes.kY);
 		vals[2] = accel.getAcceleration(ADXL345_I2C.Axes.kZ);
-
+		
 		return vals;
 	}
 	

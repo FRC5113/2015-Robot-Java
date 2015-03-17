@@ -5,10 +5,12 @@ import org.usfirst.frc.team5113.auton.GoalNothing;
 import org.usfirst.frc.team5113.auton.GoalToteClear;
 import org.usfirst.frc.team5113.auton.GoalToteStep;
 import org.usfirst.frc.team5113.comms.IRISComms;
+import org.usfirst.frc.team5113.drive.AngleManager;
 import org.usfirst.frc.team5113.drive.CANManager;
 
 public class AutonController extends DriveController
 {
+	AngleManager angleMesure = new AngleManager();
 	
 	public static ActionGoal goal;
 	
@@ -18,6 +20,8 @@ public class AutonController extends DriveController
 	private float elev;
 	private float elevToPoint;
 	private double lastElevatorHeight = 0;
+	
+	public boolean updateAngle = true;
 	
 	public ActionGoal autonGoal;
 	
@@ -163,6 +167,26 @@ public class AutonController extends DriveController
 	public void elevDown(float speed)
 	{
 		elev = speed;
+	}
+	
+	public double getAngle()
+	{
+		return angleMesure.currAngle();
+	}
+	
+	public void updateAngle()
+	{
+		updateAngle = true;
+	}
+	
+	public void noUpdateAngle()
+	{
+		updateAngle = false;
+	}
+	
+	public boolean getAngleUpdate()
+	{
+		return updateAngle;
 	}
 	
 	public void stop()

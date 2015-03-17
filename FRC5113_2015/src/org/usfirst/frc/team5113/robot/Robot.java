@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot
 	private CANManager motorManagers;// this gives us access to the Drive class
 	private DriveController controller;
 	private AutonController autonControll;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -56,7 +57,9 @@ public class Robot extends IterativeRobot
 	{
 			//IRISComms.GetInstance().update();
 			autonControll.update(motorManagers);
-			AngleManager.getInstance().update();
+			
+			if(autonControll.getAngleUpdate())
+				AngleManager.getInstance().update();
 	}
 	
 
