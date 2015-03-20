@@ -31,6 +31,7 @@ public class AutonController extends DriveController
 		mag = dir = rot = elev = elevToPoint = 0;
 		setChoice();
 		
+		
 		switch(choice)
 		{
 		case "Nothing":
@@ -54,17 +55,19 @@ public class AutonController extends DriveController
 			break;
 		}
 		
+		
   		autonGoal.controller = this;		
 	}
 	
 	private void setChoice()
 	{
-		choice = IRISComms.GetInstance().getMiscData("AutonChoice");
+		//choice = IRISComms.GetInstance().getMiscData("AutonChoice");
 	}
 
 	@Override
 	public void update(CANManager dr)
-	{
+	{		
+		
   		dr.mecanumDrive(mag, dir, rot);
   		if(elev == 0 && elevToPoint != 0)
   		{
@@ -184,13 +187,15 @@ public class AutonController extends DriveController
 	
 	public double[] getAllAngleInfo()
 	{
-		double[] angles = new double[3];
+		double[] angles = new double[5];
 		double[] accelValues = angleMesure.accelVals();
 		
 		angles[0] = accelValues[0];
 		angles[1] = accelValues[1];
 		angles[2] = accelValues[2];
 		angles[3] = angleMesure.gyroVals();
+		angles[4] = angleMesure.roll();
+		angles[5] = angleMesure.pitch();
 		
 		return angles;
 	}
@@ -205,6 +210,11 @@ public class AutonController extends DriveController
 		mag = 0.8f;
 		dir = 90;
 		rot = 0.2f;
+	}
+	
+	public String test()
+	{
+		return "WORKS";
 	}
 	
 }

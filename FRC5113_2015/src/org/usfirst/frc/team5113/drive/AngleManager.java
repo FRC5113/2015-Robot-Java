@@ -26,11 +26,17 @@ public class AngleManager
 		instance = new AngleManager();
 		instance.init();
 	}
-
+	
+	
+	//The ADXL345 starts in a power saving mode. You must turn it on by writing 0x08 to POWER_CTL (0x2D) before it will do anything interesting.
 	public void init()
 	{
 		accel = new ADXL345_I2C(Port.kMXP, Range.k4G);
-		gyro = new Gyro(0);
+		gyro = new Gyro(1);
+		gyro.initGyro();
+		System.out.println("Gyro is now inited" + gyro.getAngle());
+		
+		
 	}
 
 	public void update()
@@ -62,16 +68,25 @@ public class AngleManager
 	public double[] accelVals()
 	{
 		double[] vals = new double[2];
-		vals[0] = accel.getAcceleration(ADXL345_I2C.Axes.kX);
-		vals[1] = accel.getAcceleration(ADXL345_I2C.Axes.kY);
-		vals[2] = accel.getAcceleration(ADXL345_I2C.Axes.kZ);
 		
-		return vals;
+		if(accel != null)
+		{
+			vals[0] = accel.getAcceleration(ADXL345_I2C.Axes.kX);
+			vals[1] = accel.getAcceleration(ADXL345_I2C.Axes.kY);
+			vals[2] = accel.getAcceleration(ADXL345_I2C.Axes.kZ);
+		
+			return vals;
+		}
+		else
+			return vals;
 	}
 	
 	public double gyroVals()
 	{
-		return gyro.getAngle();
+		if(gyro != null)
+			return gyro.getAngle();
+		else
+			return 0;
 	}
 	
 	public double currAngle()

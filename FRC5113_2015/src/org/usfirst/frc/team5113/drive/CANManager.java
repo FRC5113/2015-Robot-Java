@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.can.CANJNI;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
@@ -22,6 +23,8 @@ public class CANManager
 	private CANTalon fr;
 	private CANTalon bl;
 	private CANTalon br;
+	private Talon pr;
+	private Talon pl;
 	
 	//Elevator CAN
 	private CANTalon elevator;	
@@ -133,6 +136,8 @@ public class CANManager
 		
 		//TODO: RESET PCM CAN IDS
 		pneumatics = new DoubleSolenoid(0, 0, 1);
+		pr = new Talon(0);
+		pl = new Talon(1);
 		
 	}
 	
@@ -149,6 +154,24 @@ public class CANManager
 	public void togglePneumatics()
 	{
 		pneumaticsAttemptedOpen = !pneumaticsAttemptedOpen;
+	}
+	
+	public void pneumaticWheelsIn()
+	{
+		pr.set(0.4);
+		pl.set(-0.4);
+	}
+	
+	public void pneumaticWheelsOut()
+	{
+		pr.set(-0.4);
+		pl.set(0.4);
+	}
+	
+	public void pneumaticWheelsOff()
+	{
+		pr.set(0);
+		pl.set(0);
 	}
 	
 	public void elevatorMovement(double speed)

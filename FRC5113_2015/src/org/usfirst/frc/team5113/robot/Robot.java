@@ -1,12 +1,13 @@
 package org.usfirst.frc.team5113.robot;
 
-import org.usfirst.frc.team5113.comms.IRISComms;
+//import org.usfirst.frc.team5113.comms.IRISComms;
 import org.usfirst.frc.team5113.controllers.AutonController;
 import org.usfirst.frc.team5113.controllers.DriveController;
 import org.usfirst.frc.team5113.controllers.JoystickController;
 import org.usfirst.frc.team5113.drive.AngleManager;
 import org.usfirst.frc.team5113.drive.CANManager;
 
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -30,8 +31,8 @@ public class Robot extends IterativeRobot
 	 */
 	public void robotInit()
 	{
-		IRISComms.init();
-		IRISComms.GetInstance().run();
+		//IRISComms.init();
+		//IRISComms.GetInstance().run();
 		controller = new JoystickController();
 		controller.init();
 		motorManagers = new CANManager();
@@ -46,6 +47,7 @@ public class Robot extends IterativeRobot
 	
 	public void autonomousInit()
 	{
+		System.out.println("Auton INIT WORKS");
 		autonControll = new AutonController();
 		autonControll.init();
 	}
@@ -55,9 +57,21 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
+			System.out.println("THIS WORK(AUTON PERIODIC)");
+		
 			//IRISComms.GetInstance().update();
-			autonControll.update(motorManagers);
+			//autonControll.update(motorManagers);
 			AngleManager.getInstance().update();
+			
+			System.out.println();
+			System.err.println();
+			//System.err.println("Angle?: " + autonControll.getAngle());
+			System.err.println("AccelerometerX?: " + autonControll.getAllAngleInfo()[0]);
+			System.err.println("AccelerometerY?: " + autonControll.getAllAngleInfo()[1]);
+			System.err.println("AccelerometerZ?: " + autonControll.getAllAngleInfo()[2]);
+			System.err.println("Gyro?: " + autonControll.getAllAngleInfo()[3]);
+			System.err.println("Roll?: " + autonControll.getAllAngleInfo()[4]);
+			System.err.println("Pitch?: " + autonControll.getAllAngleInfo()[5]);
 	}
 	
 
@@ -67,14 +81,6 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		//motorManagers.init();
-
-			System.out.println();
-			System.err.println("Angle?: " + autonControll.getAngle());
-			System.err.println("AccelerometerX?: " + autonControll.getAllAngleInfo()[0]);
-			System.err.println("AccelerometerY?: " + autonControll.getAllAngleInfo()[1]);
-			System.err.println("AccelerometerZ?: " + autonControll.getAllAngleInfo()[2]);
-			System.err.println("Gyro?: " + autonControll.getAllAngleInfo()[3]);
-			
 			
 			//IRISComms.GetInstance().update();
 			controller.update(motorManagers);

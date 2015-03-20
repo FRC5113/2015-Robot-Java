@@ -33,15 +33,24 @@ public class JoystickController extends DriveController
 		if (xboxController.getRawButton(5))
 		{
 			dr.setPneumatics(false);
-		} else if (xboxController.getRawButton(6))
+		} 
+		else if (xboxController.getRawButton(6))
 		{
 			dr.setPneumatics(true);
-		}
-		// Not sure if this works or not, hard to test too.
+		}// Not sure if this works or not, hard to test too.
 		else if (xboxController.getRawButton(3))
 		{
 			dr.pneumaticsClearStickyFaults();
 		}
+		
+		
+		if(xboxController.getRawButton(1))
+			dr.pneumaticWheelsIn();
+		else if(xboxController.getRawButton(2))
+				dr.pneumaticWheelsOut();
+		else
+			dr.pneumaticWheelsOff();
+			
 		dr.runPneumatics();
 
 		// Signal pneumatics errors with rumble
