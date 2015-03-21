@@ -69,6 +69,21 @@ public class JoystickController extends DriveController
 		dr.elevatorMovement(left - right);
 	}
 
+	//Buttons
+	// 1 = A button
+	// 2 = B button
+	// 3 = X button
+	// 4 = Y button
+	// 5 = left shoulder button
+	// 6 = right shoulder button
+	
+	//Axes
+	// 0 = Left Stick X-axis
+	// 1 = Left Stick Y-axis
+	// 2 = Left Trigger
+	// 3 = Right Trigger
+	// 4 = Right Stick X-axis
+	// 5 = Right Stick Y-axis
 	private void handleXboxDrive(CANManager dr)
 	{
 		//The magnitude uses sin so that it will drive at about 50% speed forward,

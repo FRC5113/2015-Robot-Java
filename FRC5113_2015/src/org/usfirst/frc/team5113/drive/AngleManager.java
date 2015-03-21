@@ -9,22 +9,22 @@ public class AngleManager
 {
 	// Accelerometer
 	ADXL345_I2C accel;	//Ari confirmed that we do in fact use I2C
-	ADXL345_I2C.AllAxes accelerations;
+	//ADXL345_I2C.AllAxes accelerations;
 
 	// Gyro
 	Gyro gyro;
 
-	private static AngleManager instance;
+	private static AngleManager angleManagerInstance;
 
 	public static AngleManager getInstance()
 	{
-		return instance;
+		return angleManagerInstance;
 	}
 
 	public static void setup()
 	{
-		instance = new AngleManager();
-		instance.init();
+		angleManagerInstance = new AngleManager();
+		angleManagerInstance.init();
 	}
 	
 	
@@ -32,9 +32,12 @@ public class AngleManager
 	public void init()
 	{
 		accel = new ADXL345_I2C(Port.kMXP, Range.k4G);
+		System.out.println("Test for toString of Accelerometer: " + accel.toString());
+		System.out.println("Test for toString(NO toString) of Accelerometer: " + accel);
+		
 		gyro = new Gyro(1);
 		gyro.initGyro();
-		System.out.println("Gyro is now inited" + gyro.getAngle());
+		System.out.println("Gyro is now inited\t" + gyro.getAngle());
 		
 		
 	}
@@ -67,18 +70,25 @@ public class AngleManager
 	 */
 	public double[] accelVals()
 	{
-		double[] vals = new double[2];
+		double[] vals = new double[3];
 		
 		if(accel != null)
 		{
 			vals[0] = accel.getAcceleration(ADXL345_I2C.Axes.kX);
 			vals[1] = accel.getAcceleration(ADXL345_I2C.Axes.kY);
 			vals[2] = accel.getAcceleration(ADXL345_I2C.Axes.kZ);
+			
+			if(accel.getAcceleration(ADXL345_I2C.Axes.kX) != 0  || accel.getAcceleration(ADXL345_I2C.Axes.kZ) != 0 || accel.getAcceleration(ADXL345_I2C.Axes.kY) != 0)
+				System.out.println("Accelerometer vals: " + vals[0] + "\t" + vals[1] + "\t" + vals[2]);
+	
 		
 			return vals;
 		}
 		else
+		{
+			System.out.println("The Accelerometer was null! yay!");
 			return vals;
+		}
 	}
 	
 	public double gyroVals()
@@ -86,7 +96,7 @@ public class AngleManager
 		if(gyro != null)
 			return gyro.getAngle();
 		else
-			return 0;
+			return -5000;
 	}
 	
 	public double currAngle()

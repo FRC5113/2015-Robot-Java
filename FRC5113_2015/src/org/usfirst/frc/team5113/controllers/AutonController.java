@@ -12,8 +12,6 @@ public class AutonController extends DriveController
 {
 	AngleManager angleMesure = new AngleManager();
 	
-	public static ActionGoal goal;
-	
 	private float mag;
 	private float dir;
 	private float rot;
@@ -69,6 +67,7 @@ public class AutonController extends DriveController
 	{		
 		
   		dr.mecanumDrive(mag, dir, rot);
+  		
   		if(elev == 0 && elevToPoint != 0)
   		{
   			dr.elevatorMovementLimited((int) elevToPoint);
@@ -82,7 +81,7 @@ public class AutonController extends DriveController
   		
   		lastElevatorHeight = dr.elevatorHeight();
   		
-  		goal.update();
+  		autonGoal.update();
 	}
 	
 	public void mecan(float mag, float dir, float rot)
@@ -171,34 +170,34 @@ public class AutonController extends DriveController
 	}
 	
 	public double getAngle()
-	{
-		return angleMesure.currAngle();
-	}
-	
-	public double roll()
-	{
-		return angleMesure.roll();
-	}
-	
-	public double pitch()
-	{
-		return angleMesure.pitch();
-	}
-	
-	public double[] getAllAngleInfo()
-	{
-		double[] angles = new double[5];
-		double[] accelValues = angleMesure.accelVals();
-		
-		angles[0] = accelValues[0];
-		angles[1] = accelValues[1];
-		angles[2] = accelValues[2];
-		angles[3] = angleMesure.gyroVals();
-		angles[4] = angleMesure.roll();
-		angles[5] = angleMesure.pitch();
-		
-		return angles;
-	}
+  	{
+  		return angleMesure.currAngle();
+  	}
+  	
+  	public double roll()
+  	{
+  		return angleMesure.roll();
+  	}
+  	
+  	public double pitch()
+  	{
+  		return angleMesure.pitch();
+  	}
+  	
+  	public double[] getAllAngleInfo()
+  	{
+  		double[] angles = new double[6];
+  		double[] accelValues = angleMesure.accelVals();
+  		
+  		angles[0] = accelValues[0];
+  		angles[1] = accelValues[1];
+  		angles[2] = accelValues[2];
+  		angles[3] = angleMesure.gyroVals();
+  		angles[4] = angleMesure.roll();
+  		angles[5] = angleMesure.pitch();
+  		
+  		return angles;
+  	}
 	
 	public void stop()
 	{

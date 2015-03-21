@@ -7,7 +7,6 @@ import org.usfirst.frc.team5113.controllers.JoystickController;
 import org.usfirst.frc.team5113.drive.AngleManager;
 import org.usfirst.frc.team5113.drive.CANManager;
 
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -42,7 +41,7 @@ public class Robot extends IterativeRobot
 	
 	public void disabledPeriodic()
 	{
-			//IRISComms.GetInstance().update();
+		//IRISComms.GetInstance().update();
 	}
 	
 	public void autonomousInit()
@@ -57,21 +56,16 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
-			System.out.println("THIS WORK(AUTON PERIODIC)");
-		
 			//IRISComms.GetInstance().update();
-			//autonControll.update(motorManagers);
+			autonControll.update(motorManagers);
 			AngleManager.getInstance().update();
 			
-			System.out.println();
-			System.err.println();
-			//System.err.println("Angle?: " + autonControll.getAngle());
-			System.err.println("AccelerometerX?: " + autonControll.getAllAngleInfo()[0]);
-			System.err.println("AccelerometerY?: " + autonControll.getAllAngleInfo()[1]);
-			System.err.println("AccelerometerZ?: " + autonControll.getAllAngleInfo()[2]);
-			System.err.println("Gyro?: " + autonControll.getAllAngleInfo()[3]);
-			System.err.println("Roll?: " + autonControll.getAllAngleInfo()[4]);
-			System.err.println("Pitch?: " + autonControll.getAllAngleInfo()[5]);
+//			System.out.println();
+//			System.err.println();
+//			System.err.println("Angle?: " + AngleManager.getInstance().currAngle());
+//			System.err.println("Gyro?: " + AngleManager.getInstance().gyroVals());
+//			System.err.println("Roll?: " + AngleManager.getInstance().roll());
+//			System.err.println("Pitch?: " + AngleManager.getInstance().pitch());
 	}
 	
 
