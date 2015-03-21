@@ -117,7 +117,7 @@ public class GoalToteClear extends ActionGoal
 				pause = true;
 			}
 			
-			if(pause && startAngle - controller.getAngle() <= 90)
+			if(pause && startAngle - controller.getAngle() >= 180)
 			{
 				controller.stop();
 				pause = false;

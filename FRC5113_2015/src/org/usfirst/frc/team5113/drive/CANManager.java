@@ -66,7 +66,10 @@ public class CANManager
 	
 	public void runPneumatics()
 	{
-		pneumatics.set(pneumaticsAttemptedOpen ? Value.kForward : Value.kReverse);
+		if(elevatorHeight() > 750)
+			pneumatics.set(pneumaticsAttemptedOpen ? Value.kForward : Value.kReverse);
+		else
+			pneumatics.set(Value.kForward);
 		
 		//Error handling. Might spam the logs, but whatever.
 		if(pneumatics.getPCMSolenoidVoltageFault())
@@ -158,14 +161,14 @@ public class CANManager
 	
 	public void pneumaticWheelsIn()
 	{
-		pr.set(0.4);
-		pl.set(-0.4);
+		pr.set(1);
+		pl.set(-1);
 	}
 	
 	public void pneumaticWheelsOut()
 	{
-		pr.set(-0.4);
-		pl.set(0.4);
+		pr.set(-1);
+		pl.set(1);
 	}
 	
 	public void pneumaticWheelsOff()
