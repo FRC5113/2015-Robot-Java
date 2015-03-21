@@ -7,10 +7,11 @@ public class GoalToteClear extends ActionGoal
 {
 	public enum State 
 	{
-		ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, INTOZONE, DROPTOTEINTOAUTOZONE
+		WAIT, ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, INTOZONE, DROPTOTEINTOAUTOZONE
 	}
 	
 	public State state = State.DOWNTOGRABTOTE;
+	//public State state = State.ROTATEFROMWITHINAUTOZONE;
 	
 	private boolean pause = false;
 	
@@ -57,7 +58,7 @@ public class GoalToteClear extends ActionGoal
 		case TOTEUP:
 			//System.out.println("TOTE UP");
 			
-			if(controller.elevToPoint(500) && !pause)
+			if(controller.elevToPoint(700) && !pause)
 			{
 				timer = System.currentTimeMillis();
 				pause = true;
@@ -79,7 +80,7 @@ public class GoalToteClear extends ActionGoal
 				pause = true;
 			}
 			
-			if(pause && controller.getAngle() - startAngle >= 90)
+			if(pause && controller.getAngle() - startAngle >= 75)
 			{
 				controller.stop();
 				pause = false;
@@ -87,7 +88,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			
 			
-			System.err.println("Angle for boolean(1st): " + (controller.getAngle() - startAngle));
+			//System.err.println("Angle for boolean(1st): " + (controller.getAngle() - startAngle));
 			controller.rotCW(0.3f);
 			
 			break;
@@ -101,7 +102,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 1500)
+				if(System.currentTimeMillis() - timer > 2000)
 				{
 					pause = false;
 					state = State.ROTATEFROMWITHINAUTOZONE;
@@ -121,15 +122,35 @@ public class GoalToteClear extends ActionGoal
 				pause = true;
 			}
 			
-			if(pause && controller.getAngle() - startAngle >= 90)
+			if(pause && controller.getAngle() - startAngle >= 75)
+			{
+				controller.stop();
+				pause = false;
+				state = State.WAIT;
+			}
+			
+			
+			//System.err.println("Angle for boolean(2nd): " + (controller.getAngle() - startAngle));
+			controller.rotCW(0.3f);
+			
+			break;
+			
+		case WAIT:
+			
+			controller.stop();
+			
+			if(!pause)
+			{
+				timer = System.currentTimeMillis();
+				pause = true;
+			}
+			
+			if(pause && System.currentTimeMillis() - timer > 1000)
 			{
 				controller.stop();
 				pause = false;
 				state = State.DROPTOTEINTOAUTOZONE;
 			}
-			System.err.println("Angle for boolean(2nd): " + (controller.getAngle() - startAngle));
-			controller.rotCW(0.3f);
-			break;
 			
 		case DROPTOTEINTOAUTOZONE:
 			
@@ -158,7 +179,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 1000)
+				if(System.currentTimeMillis() - timer > 2500)
 				{
 					pause = false;
 					state = State.QUIT;
