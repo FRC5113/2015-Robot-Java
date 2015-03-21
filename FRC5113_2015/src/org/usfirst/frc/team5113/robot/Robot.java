@@ -78,8 +78,8 @@ public class Robot extends IterativeRobot
 			
 			//IRISComms.GetInstance().update();
 			controller.update(motorManagers);
-			AngleManager.getInstance().update();
-			System.err.println("The string potentiometer height is: " + motorManagers.elevatorHeight());//1427 for highest to lift tote above other tote
+			//AngleManager.getInstance().update();
+			//System.err.println("The string potentiometer height is: " + motorManagers.elevatorHeight());//1427 for highest to lift tote above other tote
 		
 	}
 

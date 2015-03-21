@@ -21,13 +21,13 @@ public class GoalToteClear extends ActionGoal
 	public void update()
 	{
 		
-		float[] ytotedat = IRISComms.GetInstance().getToteDataFromString();
-		
-		float[] center = new float[] {
-				ytotedat[0] + (ytotedat[2] / 2f),
-				ytotedat[1] + (ytotedat[3] / 2f)};
-				
-		float[] centerImage = new float[] {320, 240};
+//		float[] ytotedat = IRISComms.GetInstance().getToteDataFromString();
+//		
+//		float[] center = new float[] {
+//				ytotedat[0] + (ytotedat[2] / 2f),
+//				ytotedat[1] + (ytotedat[3] / 2f)};
+//				
+//		float[] centerImage = new float[] {320, 240};
 		//SIZE_640x480
 		 
 		 
@@ -79,13 +79,17 @@ public class GoalToteClear extends ActionGoal
 				pause = true;
 			}
 			
-			if(pause && startAngle - controller.getAngle() >= 90)
+			if(pause && controller.getAngle() - startAngle >= 90)
 			{
 				controller.stop();
 				pause = false;
 				state = State.INTOZONE;
 			}
+			
+			
+			System.err.println("Angle for boolean(1st): " + (controller.getAngle() - startAngle));
 			controller.rotCW(0.3f);
+			
 			break;
 			
 		case INTOZONE:
@@ -97,7 +101,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 500)
+				if(System.currentTimeMillis() - timer > 1500)
 				{
 					pause = false;
 					state = State.ROTATEFROMWITHINAUTOZONE;
@@ -117,12 +121,13 @@ public class GoalToteClear extends ActionGoal
 				pause = true;
 			}
 			
-			if(pause && startAngle - controller.getAngle() >= 180)
+			if(pause && controller.getAngle() - startAngle >= 90)
 			{
 				controller.stop();
 				pause = false;
 				state = State.DROPTOTEINTOAUTOZONE;
 			}
+			System.err.println("Angle for boolean(2nd): " + (controller.getAngle() - startAngle));
 			controller.rotCW(0.3f);
 			break;
 			
@@ -135,7 +140,7 @@ public class GoalToteClear extends ActionGoal
 				timer = System.currentTimeMillis();
 				pause = true;
 			}			
-			else if(pause && (System.currentTimeMillis() - timer > 250))
+			else if(pause && (System.currentTimeMillis() - timer > 500))
 			{
 				pause = false;
 				state = State.MOVEAWAYFROMTOTE;				

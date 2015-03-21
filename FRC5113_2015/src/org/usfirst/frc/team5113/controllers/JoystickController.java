@@ -38,7 +38,7 @@ public class JoystickController extends DriveController
 		{
 			dr.setPneumatics(true);
 		}// Not sure if this works or not, hard to test too.
-		else if (xboxController.getRawButton(3))
+		else if (xboxController.getRawButton(3) && xboxController.getRawButton(7))
 		{
 			dr.pneumaticsClearStickyFaults();
 		}
@@ -108,9 +108,11 @@ public class JoystickController extends DriveController
 		// Joystick drive control
 		//The magnitude uses sin so that it will drive at about 50% speed forward,
 		//And 100% speed sideways. Because mecanum requires more power sideways.
-		float mag = (float) Math
+		float mag = (float) Math.abs(rightStick.getMagnitude() / 2f);
+				
+				/*(float) Math
 				.abs((Math.sin(rightStick.getDirectionRadians()) + rightStick
-						.getMagnitude()) / 2f);
+						.getMagnitude()) / 2f);*/
 		if (mag < 0.1f)
 		{
 			mag = 0;

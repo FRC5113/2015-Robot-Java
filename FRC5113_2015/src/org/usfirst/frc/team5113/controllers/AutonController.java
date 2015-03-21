@@ -21,7 +21,7 @@ public class AutonController extends DriveController
 	
 	public ActionGoal autonGoal;
 	
-	private String choice = "Nothing";	
+	private String choice = "Tote_Clear";	
 
 	@Override
 	public void init()
@@ -81,6 +81,7 @@ public class AutonController extends DriveController
   		
   		lastElevatorHeight = dr.elevatorHeight();
   		
+  		AngleManager.getInstance().update();
   		autonGoal.update();
 	}
 	
@@ -171,17 +172,17 @@ public class AutonController extends DriveController
 	
 	public double getAngle()
   	{
-  		return angleMesure.currAngle();
+  		return AngleManager.getInstance().currAngle();
   	}
   	
   	public double roll()
   	{
-  		return angleMesure.roll();
+  		return AngleManager.getInstance().roll();
   	}
   	
   	public double pitch()
   	{
-  		return angleMesure.pitch();
+  		return AngleManager.getInstance().pitch();
   	}
   	
   	public double[] getAllAngleInfo()

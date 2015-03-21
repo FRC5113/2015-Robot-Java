@@ -66,7 +66,7 @@ public class CANManager
 	
 	public void runPneumatics()
 	{
-		if(elevatorHeight() > 750)
+		if(elevatorHeight() > 800)
 			pneumatics.set(pneumaticsAttemptedOpen ? Value.kForward : Value.kReverse);
 		else
 			pneumatics.set(Value.kForward);
@@ -161,14 +161,14 @@ public class CANManager
 	
 	public void pneumaticWheelsIn()
 	{
-		pr.set(1);
-		pl.set(-1);
+		pr.set(.6);
+		pl.set(-.6);
 	}
 	
 	public void pneumaticWheelsOut()
 	{
-		pr.set(-1);
-		pl.set(1);
+		pr.set(-.6);
+		pl.set(.6);
 	}
 	
 	public void pneumaticWheelsOff()
