@@ -55,7 +55,7 @@ public class IRISComms implements Runnable
         //System.out.println("updating iris comms, frame: " + frame.getAddress());
 	}
 	
-	public IRISComms()
+	public void initLocal()
 	{
 		table = NetworkTable.getTable(tableName);
 		table.putBoolean("HighCamera", false);
@@ -76,6 +76,11 @@ public class IRISComms implements Runnable
         NIVision.IMAQdxStartAcquisition(sessionLow);
         
         
+	}
+	
+	public IRISComms()
+	{
+	
         
         
 	}
@@ -107,7 +112,7 @@ public class IRISComms implements Runnable
 	public static void init()
 	{
 		commsInst = new IRISComms();
-		
+		commsInst.initLocal();
 		commsInst.thread = new Thread(commsInst);
 		commsInst.thread.start();
 	}

@@ -10,7 +10,7 @@ public class GoalToteClear extends ActionGoal
 		WAIT, ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, INTOZONE, DROPTOTEINTOAUTOZONE
 	}
 	
-	public State state = State.DOWNTOGRABTOTE;
+	public State state = State.INTOZONE;
 	//public State state = State.ROTATEFROMWITHINAUTOZONE;
 	
 	private boolean pause = false;
@@ -39,9 +39,9 @@ public class GoalToteClear extends ActionGoal
 		{
 		case DOWNTOGRABTOTE:
 			
-			//System.out.println("TOTE DOWN");
+			System.out.println("TOTE DOWN");
 			
-			if(controller.elevToPoint(75) && !pause)
+			if(controller.elevToPoint(130) && !pause)
 			{
 				timer = System.currentTimeMillis();
 				pause = true;
@@ -58,7 +58,7 @@ public class GoalToteClear extends ActionGoal
 		case TOTEUP:
 			//System.out.println("TOTE UP");
 			
-			if(controller.elevToPoint(700) && !pause)
+			if(controller.elevToPoint(1000) && !pause)
 			{
 				timer = System.currentTimeMillis();
 				pause = true;
@@ -102,14 +102,14 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 2500)
+				if(System.currentTimeMillis() - timer > 4000)
 				{
 					pause = false;
-					state = State.ROTATEFROMWITHINAUTOZONE;
+					state = State.MOVEAWAYFROMTOTE;
 					controller.stop();
 				}
 				else
-				controller.forward(.4f);
+				controller.right(1f);
 			}
 			
 			break;
@@ -179,7 +179,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 3000)
+				if(System.currentTimeMillis() - timer > 2500)
 				{
 					pause = false;
 					state = State.QUIT;

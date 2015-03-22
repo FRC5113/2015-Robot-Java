@@ -66,8 +66,8 @@ public class AutonController extends DriveController
 	@Override
 	public void update(CANManager dr)
 	{		
-		dir = 90 - dir;
-  		dr.mecanumDrive2(mag, dir, rot);
+		double tempDir = 90 - dir;
+  		dr.mecanumDrive2(mag, tempDir, rot);
   		
   		if(elev == 0 && elevToPoint != 0)
   		{

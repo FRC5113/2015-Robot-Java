@@ -56,6 +56,7 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
+		System.out.println("Autonomous Periodic works!");
 			//IRISComms.GetInstance().update();
 			autonControll.update(motorManagers);
 			AngleManager.getInstance().update();

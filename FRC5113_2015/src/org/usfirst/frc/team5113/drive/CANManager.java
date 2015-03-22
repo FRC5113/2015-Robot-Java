@@ -24,6 +24,8 @@ public class CANManager
 	private CANTalon fr;
 	private CANTalon bl;
 	private CANTalon br;
+	
+	//NOT CAN!!!!!!!!!!!! WHYYYYYY
 	private Talon pr;
 	private Talon pl;
 	
