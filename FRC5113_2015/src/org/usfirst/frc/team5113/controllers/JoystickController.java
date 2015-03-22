@@ -4,6 +4,7 @@ import org.usfirst.frc.team5113.drive.CANManager;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
+import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
  * @author Lemons Handles driver input and passes to CANMANAGER for actual robot
@@ -14,6 +15,7 @@ public class JoystickController extends DriveController
 	Joystick rightStick;
 	Joystick leftStick;
 	Joystick xboxController;
+	
 
 	double rotationalSensitivity = 0.5f;
 
@@ -22,6 +24,7 @@ public class JoystickController extends DriveController
 		rightStick = new Joystick(1);
 		leftStick = new Joystick(2);
 		xboxController = new Joystick(0);
+		
 	}
 
 	boolean toggle = false;
@@ -102,13 +105,14 @@ public class JoystickController extends DriveController
 	private void handleJoystickDrive(CANManager dr)
 	{
 
-		double rightAngle = rightStick.getDirectionDegrees();
+		double rightAngle = 90 - rightStick.getDirectionDegrees();
+		
 		double leftXAxis = -leftStick.getX();
 
 		// Joystick drive control
 		//The magnitude uses sin so that it will drive at about 50% speed forward,
 		//And 100% speed sideways. Because mecanum requires more power sideways.
-		float mag = (float) Math.abs(rightStick.getMagnitude() / 2f);
+		float mag = (float) rightStick.getMagnitude() / 2f;
 				
 				/*(float) Math
 				.abs((Math.sin(rightStick.getDirectionRadians()) + rightStick
@@ -117,8 +121,14 @@ public class JoystickController extends DriveController
 		{
 			mag = 0;
 		}
+		
+//		if((rightAngle > 170) && (rightAngle < 190))
+//			mag = (mag * 2) - 0.05f;
+//		else if(((rightAngle > 350) && (rightAngle <= 360)) || ((rightAngle >= 0) && (rightAngle < 10)))
+//				mag = (mag * 2) - 0.05f;
 
-		dr.mecanumDrive(mag, rightAngle, leftXAxis / 3f);
+		
+		dr.mecanumDrive2(mag, rightAngle, leftXAxis / 3f);
 	}
 
 	public void update(CANManager dr)

@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot
 //			System.err.println("Angle?: " + AngleManager.getInstance().currAngle());
 //			System.err.println("Gyro?: " + AngleManager.getInstance().gyroVals());
 //			System.err.println("Roll?: " + AngleManager.getInstance().roll());
-//			System.err.println("Pitch?: " + AngleManager.getInstance().pitch());
+			//System.err.println("Pitch?: " + AngleManager.getInstance().pitch());
 	}
 	
 

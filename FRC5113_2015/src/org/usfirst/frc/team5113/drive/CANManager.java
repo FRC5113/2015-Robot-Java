@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.can.CANJNI;
@@ -25,6 +26,8 @@ public class CANManager
 	private CANTalon br;
 	private Talon pr;
 	private Talon pl;
+	
+	RobotDrive roboDrive;
 	
 	//Elevator CAN
 	private CANTalon elevator;	
@@ -101,14 +104,14 @@ public class CANManager
 		//fl.setPID(p, i, d, f, izone, ramprate, profile);
 		fl.set(0);
 		
-		fr = new CANTalon (5);
+		fr = new CANTalon (1);
 		//fr.changeControlMode(CANTalon.ControlMode.PercentVbus);
 		//fr.setSafetyEnabled(true);
 		//fr.setExpiration(safetyExpiration);
 		//fr.setPID(p, i, d, f, izone, ramprate, profile);
 		fr.set(0);
 		
-		bl = new CANTalon (1);
+		bl = new CANTalon (5);
 		//bl.changeControlMode(CANTalon.ControlMode.PercentVbus);
 		//bl.setSafetyEnabled(true);
 		//bl.setExpiration(safetyExpiration);
@@ -141,6 +144,12 @@ public class CANManager
 		pneumatics = new DoubleSolenoid(0, 0, 1);
 		pr = new Talon(0);
 		pl = new Talon(1);
+		
+		
+		
+		roboDrive = new RobotDrive(fl, bl, fr, br);
+		roboDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+		roboDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		
 	}
 	
@@ -230,6 +239,11 @@ public class CANManager
 		
 		elevator.set(speedOut);
 		
+	}
+	
+	public void mecanumDrive2(double magnitude, double angle, double rotation)
+	{
+		roboDrive.mecanumDrive_Polar(magnitude, angle, rotation);
 	}
 
 	//Controls the drive train

@@ -21,7 +21,8 @@ public class AutonController extends DriveController
 	
 	public ActionGoal autonGoal;
 	
-	private String choice = "Tote_Clear";	
+	//private String choice = "Tote_Clear";
+	private String choice = "Nothing";
 
 	@Override
 	public void init()
@@ -65,8 +66,8 @@ public class AutonController extends DriveController
 	@Override
 	public void update(CANManager dr)
 	{		
-		
-  		dr.mecanumDrive(mag, dir, rot);
+		dir = 90 - dir;
+  		dr.mecanumDrive2(mag, dir, rot);
   		
   		if(elev == 0 && elevToPoint != 0)
   		{

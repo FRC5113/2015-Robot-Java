@@ -21,7 +21,7 @@ public class GoalToteClear extends ActionGoal
 	@Override
 	public void update()
 	{
-		
+		System.out.println("GoalToteClear works!");
 //		float[] ytotedat = IRISComms.GetInstance().getToteDataFromString();
 //		
 //		float[] center = new float[] {
@@ -102,7 +102,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 2000)
+				if(System.currentTimeMillis() - timer > 2500)
 				{
 					pause = false;
 					state = State.ROTATEFROMWITHINAUTOZONE;
@@ -179,7 +179,7 @@ public class GoalToteClear extends ActionGoal
 			}
 			else
 			{
-				if(System.currentTimeMillis() - timer > 2500)
+				if(System.currentTimeMillis() - timer > 3000)
 				{
 					pause = false;
 					state = State.QUIT;

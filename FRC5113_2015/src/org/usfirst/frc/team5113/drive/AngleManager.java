@@ -65,7 +65,7 @@ public class AngleManager
 	public double pitch()//Y vals and Z vals
 	{
 		double[] temp = accelVals();
-		return Math.atan2(temp[0], temp[2]) + Math.PI;
+		return Math.atan2(temp[0], temp[2]);
 	}
 
 	/***
@@ -85,8 +85,8 @@ public class AngleManager
 			vals[1] = accel.getY();
 			vals[2] = accel.getZ();
 			
-			if(accel.getX() != 0  || accel.getY() != 0 || accel.getZ() != 0)
-				System.out.println("Accelerometer vals: " + vals[0] + "\t" + vals[1] + "\t" + vals[2]);
+			//if(accel.getX() != 0  || accel.getY() != 0 || accel.getZ() != 0)
+				//System.out.println("Accelerometer vals: " + vals[0] + "\t" + vals[1] + "\t" + vals[2]);
 	
 		
 			return vals;
