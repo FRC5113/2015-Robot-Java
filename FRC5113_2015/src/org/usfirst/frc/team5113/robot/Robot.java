@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5113.robot;
 
-//import org.usfirst.frc.team5113.comms.IRISComms;
+import org.usfirst.frc.team5113.comms.IRISComms;
 import org.usfirst.frc.team5113.controllers.AutonController;
 import org.usfirst.frc.team5113.controllers.DriveController;
 import org.usfirst.frc.team5113.controllers.JoystickController;
@@ -30,8 +30,7 @@ public class Robot extends IterativeRobot
 	 */
 	public void robotInit()
 	{
-		//IRISComms.init();
-		//IRISComms.GetInstance().run();
+		IRISComms.init();	//init() automatically creates and runs thread, so no need to call update method here
 		controller = new JoystickController();
 		controller.init();
 		motorManagers = new CANManager();
@@ -41,12 +40,11 @@ public class Robot extends IterativeRobot
 	
 	public void disabledPeriodic()
 	{
-		//IRISComms.GetInstance().update();
+	
 	}
 	
 	public void autonomousInit()
 	{
-		System.out.println("Auton INIT WORKS");
 		autonControll = new AutonController();
 		autonControll.init();
 	}
@@ -56,8 +54,6 @@ public class Robot extends IterativeRobot
 	 */
 	public void autonomousPeriodic()
 	{
-		System.out.println("Autonomous Periodic works!");
-			//IRISComms.GetInstance().update();
 			autonControll.update(motorManagers);
 			AngleManager.getInstance().update();
 			
@@ -75,9 +71,6 @@ public class Robot extends IterativeRobot
 	 */
 	public void teleopPeriodic()
 	{
-		//motorManagers.init();
-			
-			//IRISComms.GetInstance().update();
 			controller.update(motorManagers);
 			//AngleManager.getInstance().update();
 			//System.err.println("The string potentiometer height is: " + motorManagers.elevatorHeight());//1427 for highest to lift tote above other tote

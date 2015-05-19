@@ -59,15 +59,15 @@ public class JoystickController extends DriveController
 		// Signal pneumatics errors with rumble
 		if (dr.pneumaticsHasErrors())
 		{
-			xboxController.setRumble(RumbleType.kLeftRumble, 0.5f);
-			xboxController.setRumble(RumbleType.kRightRumble, 0.5f);
+			//xboxController.setRumble(RumbleType.kLeftRumble, Math.sin(System.currentTimeMillis() / 1000) > 0.7 ? 0.5f : 0);
+			//xboxController.setRumble(RumbleType.kRightRumble, Math.sin(System.currentTimeMillis() / 1000) > 0.7 ? 0.5f : 0);
 		}
 	}
 
 	private void handleElevator(CANManager dr)
 	{
 		// Elevator movement
-		float left = (float) xboxController.getRawAxis(2);
+		float left = ((float) xboxController.getRawAxis(2) / 4f) * 3f;
 		float right = (float) xboxController.getRawAxis(3);
 		dr.elevatorMovement(left - right);
 	}
@@ -98,8 +98,8 @@ public class JoystickController extends DriveController
 			mag = 0;
 		}
 
-		dr.mecanumDrive(mag, xboxController.getDirectionDegrees(),
-				(float) (-xboxController.getRawAxis(4) * rotationalSensitivity));
+		dr.mecanumDrive2(mag, 90 - xboxController.getDirectionDegrees(), (float) (-xboxController.getRawAxis(4) * rotationalSensitivity));
+
 	}
 
 	private void handleJoystickDrive(CANManager dr)
@@ -133,7 +133,11 @@ public class JoystickController extends DriveController
 
 	public void update(CANManager dr)
 	{
-
+		
+		// Signal switch with rumble
+		xboxController.setRumble(RumbleType.kLeftRumble, 0);
+		xboxController.setRumble(RumbleType.kRightRumble, 0);
+		
 		handlePneumatics(dr);
 		handleElevator(dr);
 
@@ -154,7 +158,13 @@ public class JoystickController extends DriveController
 			xboxController.setRumble(toggle ? RumbleType.kLeftRumble
 					: RumbleType.kRightRumble, 1);
 		}
-
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+		toggle = false;	//REMOVE THIS LATER OR SOMETHING BECAUSE IT PREVENTS US FROM SWITCHING
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 		// Xbox drive control
 		if (toggle)
 		{

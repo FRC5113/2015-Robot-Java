@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5113.auton;
 
-import org.usfirst.frc.team5113.auton.JakeTestAutonGoals.State;
-import org.usfirst.frc.team5113.comms.IRISComms;
-
 public class GoalToteStep extends ActionGoal
 {
 	public enum State 
@@ -37,10 +34,7 @@ public class GoalToteStep extends ActionGoal
 		
 		switch(state)
 		{
-		case DOWNTOGRABTOTE:
-			
-			//System.out.println("TOTE DOWN");
-			
+		case DOWNTOGRABTOTE:			
 			if(controller.elevToPoint(75) && !pause)
 			{
 				timer = System.currentTimeMillis();
@@ -56,7 +50,6 @@ public class GoalToteStep extends ActionGoal
 			break;
 			
 		case TOTEUP:
-			//System.out.println("TOTE UP");
 			
 			if(controller.elevToPoint(700) && !pause)
 			{

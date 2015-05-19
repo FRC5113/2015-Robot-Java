@@ -22,7 +22,7 @@ public class AutonController extends DriveController
 	public ActionGoal autonGoal;
 	
 	//private String choice = "Tote_Clear";
-	private String choice = "Nothing";
+	private String choice = "NONE";
 
 	@Override
 	public void init()
@@ -33,24 +33,17 @@ public class AutonController extends DriveController
 		
 		switch(choice)
 		{
-		case "Nothing":
+		case "":
 			autonGoal = new GoalNothing();
 			break;
-		case "Tote_Step":
+		case "NONE":
+			autonGoal = new GoalNothing();
+			break;
+		case "TOTE_STEP":
 			autonGoal = new GoalToteStep();
 			break;
-		case "Tote_Clear":
+		case "TOTE_CLEAR":
 			autonGoal = new GoalToteClear();
-			break;
-		case "Notote_Step":
-			break;
-		case "Notote_Clear":
-			break;
-		case "Twotote_Step":
-			break;
-		case "Twotote_Clear":
-			break;
-		case "Threetote":
 			break;
 		}
 		
@@ -60,7 +53,7 @@ public class AutonController extends DriveController
 	
 	private void setChoice()
 	{
-		//choice = IRISComms.GetInstance().getMiscData("AutonChoice");
+		choice = IRISComms.GetInstance().getMiscData("AutonPreset");
 	}
 
 	@Override
@@ -84,6 +77,9 @@ public class AutonController extends DriveController
   		
   		AngleManager.getInstance().update();
   		autonGoal.update();
+  		
+  		System.out.println(choice);
+  		
 	}
 	
 	public void mecan(float mag, float dir, float rot)
@@ -212,10 +208,4 @@ public class AutonController extends DriveController
 		dir = 90;
 		rot = 0.2f;
 	}
-	
-	public String test()
-	{
-		return "WORKS";
-	}
-	
 }

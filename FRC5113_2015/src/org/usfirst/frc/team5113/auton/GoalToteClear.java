@@ -10,7 +10,7 @@ public class GoalToteClear extends ActionGoal
 		WAIT, ROTATEFROMWITHINAUTOZONE, DOWNTOGRABTOTE, TOTEUP, ROTATE, MOVEAWAYFROMTOTE, QUIT, INTOZONE, DROPTOTEINTOAUTOZONE
 	}
 	
-	public State state = State.INTOZONE;
+	public State state = State.DOWNTOGRABTOTE;
 	//public State state = State.ROTATEFROMWITHINAUTOZONE;
 	
 	private boolean pause = false;
@@ -105,7 +105,7 @@ public class GoalToteClear extends ActionGoal
 				if(System.currentTimeMillis() - timer > 4000)
 				{
 					pause = false;
-					state = State.MOVEAWAYFROMTOTE;
+					state = State.ROTATEFROMWITHINAUTOZONE;
 					controller.stop();
 				}
 				else

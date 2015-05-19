@@ -1,17 +1,12 @@
 package org.usfirst.frc.team5113.drive;
 
-import sun.security.util.PendingException;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.can.CANJNI;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
  * @author Lemons
@@ -25,7 +20,7 @@ public class CANManager
 	private CANTalon bl;
 	private CANTalon br;
 	
-	//NOT CAN!!!!!!!!!!!! WHYYYYYY
+	//NOT CAN!!!!!!!!!!!! WHYYYYYY?!? WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY-
 	private Talon pr;
 	private Talon pl;
 	
@@ -71,7 +66,7 @@ public class CANManager
 	
 	public void runPneumatics()
 	{
-		if(elevatorHeight() > 800)
+		if(elevatorHeight() > 1250)
 			pneumatics.set(pneumaticsAttemptedOpen ? Value.kForward : Value.kReverse);
 		else
 			pneumatics.set(Value.kForward);

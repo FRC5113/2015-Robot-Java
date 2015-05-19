@@ -32,9 +32,25 @@ public class IRISComms implements Runnable
 	
 	public String getMiscData(String key)
 	{
-		return table.getString(key);
+		//TODO rewrite because this code is really ugly
+		try
+		{
+			return table.getString(key);
+		}
+		catch(Exception e)
+		{
+			try
+			{
+			e.printStackTrace();
+			table.putString(key, "");
+			}
+			catch(Exception e2)
+			{
+				e2.printStackTrace();
+			}
+		}
+		return "";
 	}
-	
 	
 	public float[] getToteDataFromString()
 	{		
@@ -52,7 +68,6 @@ public class IRISComms implements Runnable
 	{
         NIVision.IMAQdxGrab(sessionLow, frame, 1);
         CameraServer.getInstance().setImage(frame);    
-        //System.out.println("updating iris comms, frame: " + frame.getAddress());
 	}
 	
 	public void initLocal()
@@ -79,12 +94,10 @@ public class IRISComms implements Runnable
 	}
 	
 	public IRISComms()
-	{
-	
-        
-        
+	{ 
 	}
 	
+	//TODO fix
 	public void SetCamera(boolean high)
 	{
 		/*
@@ -126,16 +139,23 @@ public class IRISComms implements Runnable
 	@Override
 	public void run()
 	{
+		long timer = System.currentTimeMillis();
+
 		while(true)
 		{
-			update();
-			try
+			//Limit to max 10 ticks per second
+			if(System.currentTimeMillis() - timer >= 100)
 			{
-				Thread.sleep(25);
-			} catch (InterruptedException e)
+				update();
+			}
+			else
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
